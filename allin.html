@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стэнд: Ва-банк на Абисс</title>
+    <!-- Подключаем Google Fonts для баланса эпичности и читаемости -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета для истории "Стэнд: Ва-банк на Абисс" */
+            --bg-dark-main: #1a1a2e; /* Основной темный фон */
+            --bg-dark-container: #2a2a4a; /* Фон контейнера */
+            --text-light: #e0e0e0; /* Светлый текст */
+            --text-muted-light: #aaaaaa; /* Приглушенный светлый текст для подписей */
+            --heading-color: #8c7ae6; /* Яркий фиолетовый для заголовка */
+            --heading-shadow-color: rgba(140, 122, 230, 0.7); /* Тень заголовка */
+            --accent-purple-border: #6a5acd; /* Фиолетовый для рамки изображений и кнопок */
+            --accent-light-purple: #a29bfe; /* Более светлый фиолетовый для ссылок и ховера */
+            --emphasis-color: #ffda79; /* Золотистый для акцентов (em) */
+            --emphasis-shadow-color: rgba(255, 218, 121, 0.5); /* Тень для акцентов */
+            --shadow-container: rgba(0, 0, 0, 0.4); /* Тень контейнера */
+            --shadow-image: rgba(0, 0, 0, 0.3); /* Тень изображений */
+            --button-bg-hover: #7b68ee; /* Фон кнопки при наведении */
+            --button-bg-active: #5d4dbe; /* Фон кнопки при нажатии */
+            --button-shadow: rgba(0, 0, 0, 0.2); /* Тень кнопки */
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Современный и читаемый шрифт */
+            margin: 0;
+            padding: 0; /* Убираем дефолтный padding, чтобы контролировать через .container */
+            background-color: var(--bg-dark-main);
+            color: var(--text-light);
+            line-height: 1.7;
+            text-align: justify;
+            min-height: 100vh; /* Занимает всю высоту экрана */
+            display: flex; /* Для центрирования контейнера по вертикали на коротких страницах */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px; /* Оптимальная ширина для чтения, как на предыдущих страницах */
+            width: 90%; /* Адаптивная ширина */
+            margin: 30px auto; /* Вертикальные отступы и центрирование */
+            background-color: var(--bg-dark-container);
+            padding: 40px 60px; /* Увеличенные отступы внутри контейнера для согласованности */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-container);
+            border: 1px solid var(--accent-purple-border); /* Темно-фиолетовая рамка */
+            box-sizing: border-box; /* Учитывает padding в ширине */
+        }
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--heading-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em; /* Чуть меньше для согласованности, но все еще крупный */
+            line-height: 1.2;
+            text-shadow: 0 0 10px var(--heading-shadow-color);
+            border-bottom: 2px solid var(--heading-color);
+            padding-bottom: 15px;
+            letter-spacing: 0.03em; /* Небольшой межбуквенный интервал */
+        }
+        p {
+            margin-bottom: 1.2em;
+            font-size: 1.15em;
+        }
+        .image-container {
+            text-align: center;
+            margin: 50px 0; /* Согласованные отступы */
+            padding: 20px; /* Согласованные отступы */
+            border-radius: 12px; /* Согласованные радиусы */
+            background-color: rgba(0, 0, 0, 0.1); /* Легкий темный фон для карточки изображения */
+            box-shadow: 0 6px 20px var(--shadow-image); /* Согласованная тень */
+            border: 1px solid var(--accent-purple-border); /* Согласованная рамка */
+            transition: all 0.3s ease;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Мягкая тень для изображений */
+            margin-bottom: 15px;
+            display: block; /* Убирает лишние отступы под изображением */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif; /* Санс-сериф для читабельности подписи */
+            font-style: italic;
+            color: var(--text-muted-light);
+            font-size: 0.9em; /* Согласованный размер */
+            margin-top: 10px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.2em; /* Согласованный размер */
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif; /* Санс-сериф для читабельности кнопки */
+            color: var(--accent-light-purple);
+            text-decoration: none;
+            padding: 12px 25px;
+            border: 2px solid var(--accent-light-purple);
+            background-color: var(--bg-dark-container); /* Фон кнопки соответствует контейнеру */
+            border-radius: 50px; /* Форма таблетки для согласованности */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 0 10px var(--accent-light-purple-shadow);
+            display: inline-block;
+            white-space: nowrap;
+            max-width: 90%;
+            box-sizing: border-box;
+            font-weight: 600; /* Полужирный */
+            letter-spacing: 0.05em; /* Небольшой межбуквенный интервал */
+            text-transform: uppercase; /* Все заглавные */
+        }
+        .back-link a:hover {
+            background-color: var(--accent-light-purple);
+            color: #ffffff;
+            box-shadow: 0 0 20px var(--accent-light-purple-shadow);
+        }
+        em {
+            font-weight: 700; /* Более жирный для акцента */
+            font-style: normal; /* Убираем дефолтный курсив */
+            color: var(--emphasis-color);
+            text-shadow: 0 0 5px var(--emphasis-shadow-color);
+        }
+        /* Стили для аудио-кнопки */
+        .audio-controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .audio-button {
+            background-color: var(--accent-purple-border); /* Фиолетовый */
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px; /* Согласованный радиус */
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px var(--button-shadow);
+            position: relative;
+            z-index: 10;
+            font-family: 'Open Sans', sans-serif; /* Согласованный шрифт */
+            font-weight: 600;
+        }
+        .audio-button:hover {
+            background-color: var(--button-bg-hover); /* Светлее при наведении */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .audio-button:active {
+            background-color: var(--button-bg-active); /* Темнее при нажатии */
+            box-shadow: 0 2px 5px var(--button-shadow);
+        }
+        /* Медиа-запросы для мобильных устройств */
+        @media (max-width: 768px) { /* Планшеты */
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+            .audio-button {
+                font-size: 1em;
+                padding: 9px 18px;
+            }
+        }
+        @media (max-width: 480px) { /* Смартфоны */
+            body {
+                padding: 10px 0;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+                white-space: normal; /* Разрешаем перенос текста для узких экранов */
+            }
+            .audio-button {
+                font-size: 0.9em;
+                padding: 7px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- КНОПКА УПРАВЛЕНИЯ АУДИО -->
+        <div class="audio-controls">
+            <button id="toggleMusicBtn" class="audio-button">Музыка: Вкл.</button>
+        </div>
+        <h1>Стэнд: Ва-банк на Абисс</h1>
+        <p>Из величественного тумана, приобладая величественной энергией, под скрежет бумаги и песка — появляется воинственный силуэт Вани, что вышел из пространственной дыры.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMJ99OvNrghT_Fb2wUaXqkDZHPAwgYgsvgqIi3Quocc9PhRp3eAVQTnDHK-ydS2stD1l_aqYPIN_aydhKDU3gdVcsm1n3YNsREfJd-JVvPWfNkbnd9bQ2AjQKjLvs02QZ1Ge470O3ZSWZCFzPf52sTOPQ=w499-h763-s-no-gm?authuser=0" alt="Ваня выходит из пространственной дыры">
+            <figcaption>Ваня появляется из пространственной дыры, излучая мощную энергию.</figcaption>
+        </div>
+        <p>С невероятной аурой, жаждой игры на жизнь или смерть его встречает таинственный незнакомец.</p>
+        <p>— Ваня... — доносилось от тайной картины.<br>
+        — Наконец ты пришёл...</p>
+        <p>Ваня посмотрел на фигуру перед собой. Чужак был облачён в плащ, усыпанный картами, будто сотканный из самой колоды судьбы. Его глаза светились, как два зеркала, отражавшие не настоящее, а возможное будущее.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOHiW0PFFJH7rjBrVpEHhJXXdaIzZI711vEZ9dpq_cNb4QhfVm1d7Owa5BHnPhA2XAU6zyGiMz6g95dIQGrBMVGgoGyc2QB54gm54TS7aX6H5kTYof3ORSJj7riulW19Z8g6dreRAcXVr0fTJUh0OaHrQ=w498-h761-s-no-gm?authuser=0" alt="Эдгар, Стэнд: Колода Судьбы">
+            <figcaption>Таинственный Игрок, Эдгар, со своим Стэнд: Колода Судьбы, встречает Ваню.</figcaption>
+        </div>
+        <p>— Кто ты? — холодно спросил Ваня, хотя сердце билось сильнее обычного.<br>
+        — Я всего лишь Игрок, моё имя - Эдгар — ответил незнакомец, поклонившись, будто актёр на сцене. — Но в моём мире меня знают под именем... <em>Стэнд: Колода Судьбы.</em></p>
+        <p>Карты вспыхнули вокруг него и закружились вихрем. Из каждой капала энергия, словно израненная реальность не выдерживала их присутствия.</p>
+        <p>— Мы связаны нитями времени, Ваня. И только игра решит, чья душа продолжит существовать.</p>
+        <p>Ваня усмехнулся. Его руки сжались в кулаки, и позади проявился собственный Стэнд — массивный, словно статуя, с глазами как два раскалённых угля. На груди у него блестела карта с тузом пик.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczM_70kRsMlsRSyYbCwxe1f7mCr3atq31WX7UaTDpuFo3P2UIHuDQPiXX5U3-U-G3SWD2Zth42ffGSdnSXwk3IymWdkLAxX0ywhSXcAKhdqvGzqeCfLOkWl3r-iIsqypWbvlW2ynjXcBrI-d8uJ5dbwk7w=w510-h761-s-no-gm?authuser=0" alt="Ваня и его Стэнд: Ва-банк на Абисс">
+            <figcaption>Ваня призывает свой Стэнд: Ва-банк на Абисс, готовый к схватке.</figcaption>
+        </div>
+        <p>— <em>Стэнд: Ва-банк на Абисс!</em> — провозгласил он.</p>
+        <p>Мир содрогнулся. Пол под ногами треснул, превратившись в бесконечный стол, усыпанный колодами карт. Пространство стало ареной.</p>
+        <p>— Правила просты, — сказал Игрок, щёлкнув пальцами. — Мы раздаём карты. Каждая ставка — не монеты, не золото, а время жизни. Чем выше риск, тем больше кусков судьбы можно отнять у соперника.</p>
+        <p>— А если я выиграю? — прищурился Ваня.<br>
+        — Тогда ты получишь не только мою жизнь... но и доступ к моему времени. Шаг в любую эпоху, где ещё не ступала твоя нога.</p>
+        <p>Эти слова жгли воздух. Возможность переписать историю. Возможность встретить себя в иных мирах.</p>
+        <p>Карты были розданы. Ваня почувствовал тяжесть невидимой ставки. Его пальцы коснулись карт, но они обжигали, как угли. Каждая карта шептала: «Сделай выбор... или исчезни».</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNZdoC1cWSFYTL2naI0fZtd6qfTpX-WoE5wmD60P1KZRBejBt22ODjx_8uhBw0-EDKchoBDDP2WKFYbX8olSQAqnR6pAmK0iuatFiCbHr-CtVdc8kCvFpsgbO0JJdTADq5Kzikum_72uuHW7ZNG0Qgqxw=w498-h764-s-no-gm?authuser=0" alt="Дуэль Вани и Эдгара">
+            <figcaption>Начинается смертельная дуэль, где на кону — само время и судьба.</figcaption>
+        </div>
+        <p>— Игра началась, — сказал Эдгар. Его улыбка была бездонной, как сама смерть.</p>
+        <p>Карты ударили о стол, и мир вокруг них растворился. Взрывы временных линий, обрывки чужих судеб, смех призраков. В каждой раздаче слышался скрежет песка и стук костей.</p>
+        <p>— Всё или ничего, — прошептал Ваня. Его глаза полыхнули.<br>
+        — <em>Ва-банк.</em></p>
+        <p>Туман снова сгустился, и два Стэнда столкнулись в вихре карт и судеб, начав дуэль, где даже сама Вечность делала ставку.</p>
+        <div class="back-link">
+            <a href="index.html">ВЕРНУТЬСЯ НА ГЛАВНУЮ</a>
+        </div>
+    </div>
+    <!-- HTML5 Audio Element (скрытый) -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <!-- ЗАМЕНИТЕ ЭТОТ URL НА ПРЯМУЮ ССЫЛКУ К ВАШЕМУ MP3-ФАЙЛУ -->
+        <source src="https://fine.sunproxy.net/file/S24xV2gyU0t3RTdBU3BWYzQ3Q0ZmUjFpQnV0OWtaT21ZMFRsSTB4VnBNV3huekM1Tm5WbDY4MWFFTlE2ZGt1SFdmSmpuaXJydUhnREFKRkxkbVFVNkVkOU5TbVpHZFVaeFFZenAvMnR1bjg9/Samuel_Kim_-_Jojo_yayayayaya_Pillar_Men_Theme_but_it_s_EPIC_VERSION_Awaken_(SkySound.cc).mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+    <script>
+        var audio = document.getElementById('backgroundMusic');
+        var toggleMusicBtn = document.getElementById('toggleMusicBtn');
+        var musicPlaying = false; // Изначально музыка не играет
+        
+        function updateButtonText() {
+            if (audio.paused) {
+                toggleMusicBtn.textContent = 'Музыка: Вкл.';
+                musicPlaying = false;
+            } else {
+                toggleMusicBtn.textContent = 'Музыка: Выкл.';
+                musicPlaying = true;
+            }
+        }
+        
+        toggleMusicBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play()
+                    .then(() => {
+                        updateButtonText();
+                        console.log("Музыка успешно воспроизводится.");
+                    })
+                    .catch(error => {
+                        console.error("Не удалось воспроизвести музыку (вероятно, браузер блокирует автозапуск без взаимодействия):", error);
+                        alert("Не удалось воспроизвести музыку. Браузер блокирует автозапуск или произошла ошибка.");
+                        toggleMusicBtn.textContent = 'Музыка: Вкл. (Ошибка)';
+                        musicPlaying = false;
+                    });
+            } else {
+                audio.pause();
+                updateButtonText();
+                console.log("Музыка остановлена.");
+            }
+        });
+        
+        audio.onloadedmetadata = function() {
+            updateButtonText();
+        };
+        
+        if (audio.readyState >= 2) {
+            updateButtonText();
+        }
+        
+        audio.onplay = updateButtonText;
+        audio.onpause = updateButtonText;
+    </script>
+</body>
+</html>

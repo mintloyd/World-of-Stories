@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История о Ване и проруби</title>
+    <!-- Подключаем Google Fonts для баланса серьезности и дружелюбия -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета для истории "Ваня и прорубь" */
+            --bg-cold-light: #e0f7fa; /* Очень светлый ледяной голубой */
+            --bg-cold-dark: #b2ebf2;  /* Светлый ледяной голубой */
+            --text-main: #263238;     /* Темный сине-серый для основного текста */
+            --text-muted: #607d8b;    /* Приглушенный сине-серый */
+            --heading-color: #006064; /* Темный бирюзовый/аквамариновый для заголовка */
+            --accent-ice: #80deea;    /* Средний бирюзовый для акцентов льда */
+            --accent-spirit: #d32f2f; /* Сильный красный для "силы духа" */
+            --bg-warm: #fff8e1;       /* Светлый кремово-желтый для тепла */
+            --border-warm: #ffb74d;   /* Светло-оранжевый для теплой рамки */
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Чистый и современный шрифт */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, var(--bg-cold-light), var(--bg-cold-dark)); /* Ледяной градиентный фон */
+            color: var(--text-main);
+            line-height: 1.7; /* Улучшенная читаемость */
+            text-align: justify;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px; /* Оптимальная ширина для чтения */
+            width: 90%; /* Адаптивная ширина */
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 15px; /* Мягкие, округлые углы */
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            box-sizing: border-box; /* Учитывает padding в ширине */
+            border: 1px solid var(--accent-ice); /* Легкая ледяная рамка */
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--heading-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em; /* Крупный заголовок */
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-ice); /* Ледяная линия под заголовком */
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            font-size: 1.15em; /* Немного крупнее для легкого чтения */
+        }
+
+        em {
+            font-weight: 700; /* Более жирный для акцента */
+            font-style: normal; /* Убираем дефолтный курсив */
+            color: var(--accent-spirit); /* Сильный красный акцент для "силы духа" */
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 50px 0; /* Больше отступа для изображений */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        /* Стиль для первого изображения: Ваня и друг в проруби (холод, вызов) */
+        .image-container.first-dip {
+            background: linear-gradient(to bottom right, var(--bg-cold-light), #c3e6f2); /* Немного более насыщенный холодный градиент */
+            border: 1px solid var(--accent-ice);
+        }
+
+        /* Стиль для второго изображения: Ваня пьет чай (тепло, облегчение) */
+        .image-container.warm-up {
+            background: linear-gradient(to top left, var(--bg-warm), #ffeccf); /* Теплый кремово-желтый градиент */
+            border: 1px solid var(--border-warm);
+            box-shadow: 0 8px 25px rgba(255, 183, 77, 0.25); /* Теплая, заметная тень */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Мягкая тень для изображений */
+            margin-bottom: 15px;
+            display: block; /* Убирает лишние отступы под изображением */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.2em;
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px 25px;
+            border: 2px solid var(--heading-color); /* Темно-бирюзовая рамка */
+            background-color: var(--bg-cold-light);
+            border-radius: 50px; /* Форма таблетки */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .back-link a:hover {
+            background-color: var(--heading-color); /* Темно-бирюзовый фон при наведении */
+            color: #ffffff;
+            border-color: var(--heading-color);
+            box-shadow: 0 4px 15px rgba(0, 96, 100, 0.3);
+        }
+
+        /* --- Медиа-запросы для мобильных устройств --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>История о Ване и проруби</h1>
+        <p>Зима была настоящая — морозная, снежная, с тем самым скрипом под ногами, который помнят с детства. Мы тогда работали в казино, молодые, полные энергии, и после ночных смен хотелось встряхнуть себя чем-то необычным. У меня уже была привычка купаться зимой: ледяная вода словно очищала и наполняла силами. И однажды утром я сказал Ване:</p>
+        <p>— Пошли со мной в прорубь.</p>
+        <p>Он сначала удивился, но спорить не стал. Ваня всегда был человеком действия: если уж решил — значит, пойдёт до конца.</p>
+        <p>Мы вышли к озеру. Лёд скрипел, воздух резал щеки, а от дыхания поднимались облака пара. У понтона уже сидели рыбаки — закутанные в ватники, с термосами и удочками. Они бросали в нашу сторону взгляды с лёгкой усмешкой, мол, посмотрим, какие вы смельчаки.</p>
+        <p>На краю понтона темнела аккуратно вырубленная прорубь. Вода в ней выглядела густой и чёрной, из неё поднимался пар. Я первым шагнул: быстрый вдох, прыжок, и ледяная вода сомкнулась вокруг. Тело обожгло, но через секунду пришло то самое чувство — будто внутри зажглась искра. Вылез, укутался полотенцем и улыбнулся:</p>
+        <p>— Теперь ты.</p>
+        <div class="image-container first-dip">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNgstjCAIhvjZMvxo3YFMo-5Vylrp0CcvbVKM4wvgBSCOfzvE79JtZM8sOyzKDmLWeDNCrZ_FM3REwiT3Uy7trHscm5ci6qTl-sW4i8CtSzAgtzTxt0mZFOEe3veKW6MG7LduzQaqsWt5AbNXpjEiMeLA=w1024-h1536-s-no-gm?authuser=0" alt="Ваня и друг в проруби">
+            <figcaption>Ваня и его друг в ледяной проруби, празднующие свою смелость.</figcaption>
+        </div>
+        <p>Ваня стоял босиком на понтоне, мороз хватал его за плечи, рыбаки тихо хмыкали. Он сделал вдох, ещё один — и шагнул. Всплеск, мгновение тишины, и вот он вынырнул, резко хватая воздух. На его лице мелькнули и шок, и смех, и восторг.</p>
+        <p>— Вот это да! — выдохнул он, глаза сияли так, что даже рыбаки заулыбались.</p>
+        <p>Мы помогли ему подняться, накинули полотенце, протянули горячий чай. Он дрожал, но в каждом движении чувствовалась победа — над холодом, над собой.</p>
+        <div class="image-container warm-up">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMHYhKOKBr526_lASctEZVF9fzzIltXyS6jpIDFSJGh0ZKvzvDzxAXbtYF00pIIUsHwXKh4BlN2ZaK5fETGAkhCF1J9cpv44NyLZuLWnOGxC9zjS087NuxbCjTz50cmRdfSa6kzEkBrdpwG4GaX6UJxEQ=w1024-h1536-s-no-gm?authuser=0" alt="Ваня пьет горячий чай">
+            <figcaption>Ваня согревается горячим чаем после погружения в ледяную воду.</figcaption>
+        </div>
+        <p>Рыбаки, улыбаясь, пробурчали что-то вроде «Молодцы, парни», и это стало дополнительной наградой.</p>
+        <p>Мы стояли на понтоне, смеялись, делились впечатлениями. И было ясно одно: этот момент останется с нами навсегда. Потому что такие поступки — не про холод и воду, а про <em>силу духа.</em></p>
+        <p>А Ваня понял главное: рядом есть друзья, которые всегда подстрахуют, поддержат и сделают так, что даже самый лютый мороз окажется тёплым.</p>
+        <div class="back-link">
+            <a href="index.html">Вернуться на Главную</a>
+        </div>
+    </div>
+</body>
+</html>

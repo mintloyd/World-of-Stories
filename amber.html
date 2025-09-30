@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваня и смена на рулетке</title>
+    <!-- Подключаем Google Fonts для баланса элегантности и читаемости -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета для истории "Ваня и смена на рулетке" */
+            --bg-casino-dark: #1f3b2d; /* Темно-зеленый, как сукно рулетки */
+            --bg-casino-light: #3d6c4a; /* Более светлый зеленый */
+            --text-light: #f0f0e0;     /* Светлый кремовый для текста */
+            --text-muted-light: #c0c0b0; /* Приглушенный светлый текст */
+            --heading-gold: #d4af37;   /* Золотой для заголовка */
+            --accent-red: #cc0000;     /* Красный для акцентов (рулетка) */
+            --accent-gold-light: #e6b840; /* Светлее золотой для кнопок/рамок */
+            --container-bg: #2d4c39;   /* Фон контейнера, чуть светлее основного фона */
+            --container-border: #4d7a5b; /* Рамка контейнера */
+            --shadow-dark: rgba(0, 0, 0, 0.5); /* Темная тень */
+            --shadow-light: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Чистый и современный шрифт */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, var(--bg-casino-dark), var(--bg-casino-light)); /* Градиент, имитирующий атмосферу казино */
+            color: var(--text-light);
+            line-height: 1.7;
+            text-align: justify;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 30px auto;
+            background-color: var(--container-bg);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-dark);
+            box-sizing: border-box;
+            border: 1px solid var(--container-border); /* Рамка в тон */
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--heading-gold);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em;
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--heading-gold); /* Золотая пунктирная линия */
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5); /* Легкое свечение */
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            font-size: 1.15em;
+        }
+
+        em {
+            font-weight: 700;
+            font-style: normal;
+            color: var(--accent-red); /* Красный акцент для важных фраз */
+            text-shadow: 0 0 5px rgba(204, 0, 0, 0.4);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 50px 0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.1); /* Темный полупрозрачный фон */
+            border: 1px solid var(--accent-gold-light); /* Золотая рамка */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            color: var(--text-muted-light);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.2em;
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--heading-gold); /* Золотой текст кнопки */
+            text-decoration: none;
+            padding: 12px 25px;
+            border: 2px solid var(--accent-gold-light); /* Золотая рамка */
+            background-color: var(--container-bg); /* Фон кнопки совпадает с контейнером */
+            border-radius: 50px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: inline-block;
+            white-space: nowrap;
+            box-sizing: border-box;
+            max-width: 90%;
+            box-shadow: 0 0 10px rgba(230, 184, 64, 0.3); /* Золотое свечение */
+        }
+        .back-link a:hover {
+            background-color: var(--accent-gold-light); /* Золотой фон при наведении */
+            color: var(--bg-casino-dark); /* Темный текст при наведении */
+            border-color: var(--accent-gold-light);
+            box-shadow: 0 0 20px rgba(230, 184, 64, 0.6);
+        }
+
+        /* --- Медиа-запросы для мобильных устройств --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+                white-space: normal;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваня и смена на рулетке</h1>
+        <p>Однажды Ваня вышел на смену в Amber studios. Работал он, как обычно, крупье — спокойный, уверенный, невозмутимый. В ту ночь ему достался самый "живой" стол — рулетка. Там, где красное или чёрное, чёт или нечёт, и всё решает шарик и чуть-чуть удачи.</p>
+        <p>Смену он начал с фразы, которую всегда повторял с почти философским выражением лица:</p>
+        <p>"Главное настроиться и сесть удобно."</p>
+        <p>И сел.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMLdDBTKFQlgTTeIrTD01HJX83FTh04sd0uHlQdmLZyxrtWw9OMAhoANB4ei3uUQurHEVjaZZvGbX_Xhf10vhm_YnBkCQoP9UVi4wm33ALYac4zHRS66Si5BuOUc_e3zkrXXHCBnKwWonAmXebQaSz8gQ=w853-h1280-s-no-gm?authuser=0" alt="Ваня, сосредоточенный крупье за рулеткой">
+            <figcaption>Ваня, сосредоточенный крупье, готов к игре.</figcaption>
+        </div>
+        <p>В прямом смысле — сел и больше не вставал. Целую ночь — 12 часов подряд</p>
+        <p>Игроки менялись, ставки летали, шум стоял привычный, а Ваня — как памятник спокойствию. Даже охранники в какой-то момент начали спорить между собой, встанет ли он сегодня вообще.</p>
+        <p>Он не встал.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPkbNq7lod5zuEUqzNbJUn05Ot4VBTG-ta16kicGS-QWN8pvPV93Vts8S8DgN72ZI1WJuqK8TXDNLALkZgZEXsU5RE6JFT6OJuCUMjjS2oNdXUjJjjwMjpcBb-hyiWyZNPSHw8TZl8jeZl74ilgXsS6xw=w853-h1280-s-no-gm?authuser=0" alt="Ваня, невозмутимый крупье в капюшоне">
+            <figcaption>Невозмутимость Вани поражает даже в самый разгар смены.</figcaption>
+        </div>
+        <p>На утро, когда смена закончилась и на его место пришёл новый крупье, Ваня медленно поднялся, потянулся и сказал:</p>
+        <p>"Вот теперь можно и домой. <em>Главное же — настроиться и сесть удобно.</em>"</p>
+        <p>И пошёл, как герой.</p>
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczN5DA0puVlEn-b8GjAQJtw3SgJ6u_EDtDGEYI8qNcCX2YozsAro2BmGly93CCNDZZDZgowTV9-h4yoj382JJQ_vs_e_JdylZa-ctfV68KqCvY2MYISOt72ZNGgrG7HUWpHlRhztVZOzw6SUqnbVlZw0aA=w853-h1280-s-no-gm?authuser=0" alt="Ваня, уставший, но довольный после смены">
+            <figcaption>Завершение смены: Ваня, уставший, но торжествующий.</figcaption>
+        </div>
+        <div class="back-link">
+            <a href="index.html">Вернуться на Главную</a>
+        </div>
+    </div>
+</body>
+</html>

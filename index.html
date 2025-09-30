@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир Историй и Колесо Судьбы</title>
+    <!-- Подключаем Google Fonts: Merriweather для заголовков, Open Sans для текста -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            line-height: 1.6; /* Восстанавливаем нормальный line-height */
+            display: flex; /* Сохраняем ваш flex-контейнер */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Убеждаемся, что body занимает всю высоту */
+            margin: 0; /* Убираем возможные внешние отступы */
+            padding: 0; /* Убираем возможные внутренние отступы */
+            /* Дополнительно, если нужно принудительно видимость */
+            overflow: auto; /* Позволяем прокрутку, если контент больше */
+            color: var(--main-text-color); /* Принудительно устанавливаем цвет текста по умолчанию */
+        }
+        /* ========================================= */
+        /* ОБЩИЕ ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ И ОСНОВНЫЕ СТИЛИ */
+        /* ========================================= */
+        :root {
+            /* Общие цветовые переменные для главной страницы */
+            --main-bg-light: #fdfbfd;
+            --main-bg-dark: #e0e6f2;
+            --main-heading-color: #5a2d82;
+            --main-text-color: #343a40;
+            --main-text-muted: #555;
+            --container-bg: #ffffff;
+            --container-border: #d0d0e0;
+            --shadow-base: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.12);
+            --card-link-color: #5a2d82;
+            --card-link-hover-color: #7b4ea3;
+            /* Цвета для игры "Колесо Судьбы Вани" */
+            --game-bg: #2b2b40;
+            --game-container-bg: #3c3c5c;
+            --game-text-color: #e0e0e0;
+            --game-accent-color: #ffcc00;
+            --game-button-bg: #6a5acd;
+            --game-button-hover-bg: #7b68ee;
+            --game-button-text: #ffffff;
+            --game-choice-button-bg: #4a4a7a;
+            --game-choice-button-hover: #5d5db0;
+            --game-result-bad: #d32f2f;
+            --game-result-good: #6aa84f;
+            /* Цвета секторов колеса */
+            --sector-hedgehog: #a7d9da;
+            --sector-bathtub: #ffeecb;
+            --sector-abyss: #424242;
+            --sector-icehole: #b2ebf2;
+            --sector-sarcophagus: #d7ccc8;
+            --sector-roulette: #3d6c4a;
+            --sector-strongman: #666666;
+            --sector-placeholder: #f8f8f8; /* Для будущих историй, если будут */
+            /* Цвета для бонусной кнопки на главной странице */
+            --bonus-bg-start: #ffcc00;
+            --bonus-bg-end: #ffa500;
+            --bonus-border: #cc7700;
+            --bonus-text-color: #3d2400;
+            --bonus-hover-text-color: #ffffff;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--main-text-color);
+            text-align: center;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Стили для корневого контейнера приложения (нужен для переключения фонов) */
+        #app-container.main-view {
+            background: linear-gradient(to bottom right, var(--main-bg-light), var(--main-bg-dark));
+            color: var(--main-text-color);
+        }
+        #app-container.game-view {
+            background: linear-gradient(to bottom right, var(--game-bg), var(--game-container-bg));
+            color: var(--game-text-color);
+        }
+        .container {
+            max-width: 900px;
+            width: 90%;
+            margin: 30px auto;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px var(--shadow-hover); /* Общая тень для обоих контейнеров */
+        }
+        /* Стили для контейнера главной страницы */
+        #main-page-view > .container {
+            background-color: var(--container-bg);
+            border: 1px solid var(--container-border);
+        }
+        /* Стили для контейнера игры */
+        #game-page-view > .container {
+            background-color: var(--game-container-bg);
+            border: 1px solid var(--game-accent-color);
+        }
+        h1 {
+            font-family: 'Merriweather', serif;
+            margin-bottom: 25px;
+            font-size: 3.2em;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+            padding-bottom: 10px;
+        }
+        /* Заголовок главной страницы */
+        #main-page-view h1 {
+            color: var(--main-heading-color);
+        }
+        /* Заголовок игры */
+        #game-page-view h1 {
+            color: var(--game-accent-color);
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+        }
+        p {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+        }
+        /* Параграфы главной страницы */
+        #main-page-view p {
+            color: var(--main-text-muted);
+        }
+        /* Параграфы игры */
+        #game-page-view .game-description, #game-page-view .choice-container p {
+            color: var(--game-text-color);
+        }
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .story-card {
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 10px var(--shadow-base);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s, background-color 0.3s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            background-color: #f7f7f7;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+        }
+        .story-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 20px var(--shadow-hover);
+        }
+        .story-card a {
+            text-decoration: none;
+            color: var(--card-link-color);
+            font-weight: 600;
+            font-size: 1.3em;
+            display: flex; /* Flex для иконки и текста */
+            flex-direction: column; /* Элементы в колонку */
+            align-items: center; /* Центрирование по горизонтали */
+            justify-content: center; /* Центрирование по вертикали */
+            gap: 8px; /* Отступ между иконкой и текстом */
+            padding: 5px;
+            transition: color 0.3s ease;
+            width: 100%; /* Занимает всю ширину карточки */
+            height: 100%; /* Занимает всю высоту карточки */
+        }
+        .story-card a:hover {
+            color: var(--card-link-hover-color);
+        }
+        .story-card a img {
+            width: 40px; /* Размер иконки */
+            height: 40px;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.2)); /* Легкая тень для иконки */
+        }
+        /* --- Стилизация карточек по названию историй --- */
+        .story-card.hedgehog { background: linear-gradient(to top left, #e0f2f7, #d4e7e9); border-color: #a7d9da; }
+        .story-card.hedgehog a { color: #4a6c6d; }
+        .story-card.hedgehog:hover { background: linear-gradient(to top left, #cee8ed, #c2dce0); }
+        .story-card.bathtub { background: linear-gradient(to bottom right, #fff8e1, #ffeecb); border-color: #ffcc80; }
+        .story-card.bathtub a { color: #4a3a2d; }
+        .story-card.bathtub:hover { background: linear-gradient(to bottom right, #fff5d1, #ffdeac); }
+        .story-card.abyss { background: linear-gradient(to top, #212121, #424242); border-color: #616161; }
+        .story-card.abyss a { color: #e0e0e0; }
+        .story-card.abyss a:hover { color: #fff; }
+        .story-card.abyss:hover { background: linear-gradient(to top, #000000, #303030); }
+        .story-card.icehole { background: linear-gradient(to bottom, #e0f7fa, #b2ebf2); border-color: #80deea; }
+        .story-card.icehole a { color: #00838f; }
+        .story-card.icehole:hover { background: linear-gradient(to bottom, #d1eff2, #9fe3ec); }
+        .story-card.sarcophagus { background: linear-gradient(to right, #efebe9, #d7ccc8); border-color: #a1887f; }
+        .story-card.sarcophagus a { color: #5d4037; }
+        .story-card.sarcophagus:hover { background: linear-gradient(to right, #e2dedc, #c5b8b4); }
+        .story-card.roulette { background: linear-gradient(to bottom right, #1f3b2d, #3d6c4a); border-color: #d4af37; }
+        .story-card.roulette a { color: #f0f0e0; }
+        .story-card.roulette a:hover { color: #ffe082; }
+        .story-card.roulette:hover { background: linear-gradient(to bottom right, #2a4c39, #4a7a5b); }
+        /* Ваня: Сила и Стойкость */
+        .story-card.strongman {
+            background: linear-gradient(to bottom, #333333, #555555); /* Темно-серый, как металл или бетон */
+            border-color: #d4af37; /* Золотой акцент */
+        }
+        .story-card.strongman a {
+            color: #f0f0e0; /* Светлый текст */
+        }
+        .story-card.strongman a:hover {
+            color: #ffe082; /* Золотой при наведении */
+        }
+        .story-card.strongman:hover {
+            background: linear-gradient(to bottom, #444444, #666666);
+        }
+        .story-card.strongman a img {
+            width: 40px; /* Размер иконки */
+            height: 40px;
+            /* Фильтр для превращения черной иконки в золотую/желтую */
+            filter: invert(80%) sepia(50%) saturate(1500%) hue-rotate(30deg) brightness(110%) contrast(100%) drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+        }
+        /* Бонусная карточка для игры */
+        .story-card.game-bonus {
+            background: linear-gradient(to bottom right, var(--bonus-bg-start), var(--bonus-bg-end));
+            border-color: var(--bonus-border);
+            box-shadow: 0 6px 15px rgba(255, 165, 0, 0.3);
+        }
+        .story-card.game-bonus:hover {
+            background: linear-gradient(to bottom right, #ffdd33, #ffb31a);
+            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.5);
+        }
+        .story-card.game-bonus a {
+            color: var(--bonus-text-color);
+        }
+        .story-card.game-bonus a:hover {
+            color: var(--bonus-hover-text-color);
+        }
+        /* ЖДЁМ ИСТОРИЮ: Нейтральный, "скоро будет" вид */
+        .story-card.placeholder {
+            background: linear-gradient(to top right, #f8f8f8, #e8e8e8);
+            border-color: #cccccc;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .story-card.placeholder:hover {
+            transform: none;
+            box-shadow: 0 4px 10px var(--shadow-base);
+        }
+        .story-card.placeholder a {
+            color: #808080;
+            pointer-events: none; /* Это самое главное, чтобы ссылки были неактивны */
+        }
+        .story-card.placeholder a:hover {
+            color: #808080;
+        }
+        /* ========================================= */
+        /* СТИЛИ ИГРЫ */
+        /* ========================================= */
+        .game-status {
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--game-accent-color);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .game-status span {
+            display: flex;
+            align-items: center;
+        }
+        .game-status img {
+            margin-right: 5px;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); /* Тень для иконок */
+        }
+        .wheel-outer-container {
+            position: relative;
+            width: 320px; /* Увеличим размер контейнера колеса */
+            height: 320px;
+            margin: 20px auto 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wheel-container {
+            width: 300px; /* Размер колеса */
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid var(--game-accent-color);
+            position: absolute;
+            background-color: var(--game-container-bg); /* Запасной фон */
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7), inset 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 4s cubic-bezier(0.1, 0.9, 0.2, 1);
+            /* Conic gradient для отрисовки секторов */
+            background: conic-gradient(
+                var(--sector-hedgehog) 0% 14.2857%,
+                var(--sector-bathtub) 14.2857% 28.5714%,
+                var(--sector-abyss) 28.5714% 42.8571%,
+                var(--sector-icehole) 42.8571% 57.1428%,
+                var(--sector-sarcophagus) 57.1428% 71.4285%,
+                var(--sector-roulette) 71.4285% 85.7142%,
+                var(--sector-strongman) 85.7142% 100%
+            );
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--game-accent-color);
+            z-index: 10;
+        }
+        .wheel-icon-label {
+            position: absolute;
+            z-index: 2;
+            transform-origin: center center;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px; /* Уменьшаем базовый размер контейнера для иконки */
+            height: 50px;
+        }
+        .wheel-icon-label img {
+            width: 100%; /* Иконка заполняет контейнер */
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.7)); /* Тень для лучшей видимости */
+            transition: transform 4s cubic-bezier(0.1, 0.9, 0.2, 1); /* Анимация вращения иконки */
+        }
+        .game-result {
+            margin-top: 20px;
+            font-size: 1.1em;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .game-result.bad-outcome {
+            color: var(--game-result-bad);
+        }
+        .game-result.good-outcome {
+            color: var(--game-result-good);
+        }
+        .game-controls button {
+            background-color: var(--game-button-bg);
+            color: var(--game-button-text);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+            text-transform: uppercase;
+        }
+        .game-controls button:hover {
+            background-color: var(--game-button-hover-bg);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        .game-controls button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .choice-container {
+            margin-top: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .choice-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .game-choice-button {
+            background-color: var(--game-choice-button-bg);
+            color: var(--game-button-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            margin: 5px;
+        }
+        .game-choice-button:hover {
+            background-color: var(--game-choice-button-hover);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .back-to-main {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1em;
+        }
+        .back-to-main a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--game-accent-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid var(--game-accent-color);
+            background-color: var(--game-container-bg);
+            border-radius: 50px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            display: inline-block;
+            white-space: nowrap;
+            box-sizing: border-box;
+            max-width: 90%;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.2);
+        }
+        .back-to-main a:hover {
+            background-color: var(--game-accent-color);
+            color: var(--game-bg);
+            border-color: var(--game-accent-color);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+        /* Скрытие/показ блоков */
+        .hidden {
+            display: none !important;
+        }
+        /* ========================================= */
+        /* Стили для раздела достижений */
+        /* ========================================= */
+        .achievements-section {
+            margin-top: 40px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+        }
+        .achievements-section h2 {
+            font-family: 'Merriweather', serif;
+            color: var(--game-accent-color);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+        }
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            justify-content: center;
+        }
+        .achievement-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--game-choice-button-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .achievement-item img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+            filter: grayscale(100%) brightness(0.8); /* Серый и немного темнее */
+            opacity: 0.6;
+            transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        }
+        .achievement-item span {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7); /* Более тусклый текст */
+            font-weight: 400;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .achievement-item.achieved {
+            background-color: var(--game-button-hover-bg); /* Более яркий фон */
+            box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .achievement-item.achieved img {
+            filter: none; /* Полностью цветная иконка */
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .achievement-item.achieved span {
+            color: var(--game-text-color); /* Яркий текст */
+            font-weight: 600;
+        }
+        /* ========================================= */
+        /* Стили для кастомных уведомлений */
+        /* ========================================= */
+        .notification-display {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green for success */
+            color: white;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-in-out;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .notification-display.show {
+            opacity: 1;
+        }
+        .notification-display.warning {
+            background-color: #ff9800; /* Orange for warnings */
+        }
+        /* ========================================= */
+        /* МЕДИА-ЗАПРОСЫ */
+        /* ========================================= */
+        @media (max-width: 768px) {
+            .container { margin: 20px auto; padding: 25px 30px; }
+            h1 { font-size: 2.5em; margin-bottom: 20px; }
+            p { font-size: 1.05em; margin-bottom: 25px; }
+            .story-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; }
+            .story-card { padding: 18px; min-height: 90px; }
+            .story-card a { font-size: 1.1em; }
+            .story-card a img { width: 35px; height: 35px; }
+            .game-status { font-size: 1.1em; gap: 10px; }
+            .game-status span { margin: 0 5px; }
+            .wheel-outer-container { width: 250px; height: 250px; }
+            .wheel-container { width: 240px; height: 240px; }
+            .wheel-pointer { border-left-width: 15px; border-right-width: 15px; border-top-width: 25px; }
+            .wheel-icon-label { width: 40px; height: 40px; }
+            .game-controls button { font-size: 1em; padding: 10px 20px; margin: 8px; }
+            .game-choice-button { font-size: 0.9em; padding: 8px 15px; }
+            .achievements-section h2 { font-size: 1.5em; }
+            .achievements-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+            .achievement-item { padding: 8px; }
+            .achievement-item img { width: 35px; height: 35px; }
+            .achievement-item span { font-size: 0.85em; }
+        }
+        @media (max-width: 480px) {
+            .container { margin: 15px auto; padding: 20px; width: 95%; }
+            h1 { font-size: 1.8em; margin-bottom: 15px; }
+            p { font-size: 0.95em; margin-bottom: 15px; }
+            .story-grid { grid-template-columns: 1fr; gap: 12px; }
+            .story-card { min-height: 70px; padding: 15px; }
+            .story-card a { font-size: 1em; }
+            .story-card a img { width: 30px; height: 30px; }
+            .game-status { font-size: 0.95em; flex-direction: column; gap: 5px; }
+            .game-status span { margin: 0; }
+            .wheel-outer-container { width: 180px; height: 180px; }
+            .wheel-container { width: 170px; height: 170px; }
+            .wheel-pointer { top: -15px; border-left-width: 10px; border-right-width: 10px; border-top-width: 20px; }
+            .wheel-icon-label { width: 30px; height: 30px; }
+            .game-controls button { font-size: 0.9em; padding: 8px 15px; margin: 5px; }
+            .game-choice-button { font-size: 0.8em; padding: 7px 12px; }
+            .achievements-section h2 { font-size: 1.3em; }
+            .achievements-grid { grid-template-columns: 1fr 1fr; }
+            .achievement-item { padding: 5px; }
+            .achievement-item img { width: 30px; height: 30px; }
+            .achievement-item span { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- ========================================= -->
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <!-- ========================================= -->
+        <div id="main-page-view">
+            <div class="container">
+                <h1>Добро пожаловать в Мир Историй!</h1>
+                <p>Открой все истории, играя в Колесо Судьбы:</p>
+                <div class="story-grid">
+                    <!-- Карточка "Колесо Судьбы" - ведет к игре -->
+                    <div class="story-card game-bonus">
+                        <a href="#" onclick="showGamePage(); return false;">
+                            <img src="https://img.icons8.com/?size=100&id=Im1jEMOCgfaF&format=png&color=000000" alt="Иконка приза">
+                            Колесо Судьбы
+                        </a>
+                    </div>
+                    <!-- Остальные истории - изначально заблокированы -->
+                    <div class="story-card hedgehog placeholder" data-story-id="hedgehog">
+                        <a href="story-hedgehog.html">
+                            <img src="https://img.icons8.com/?size=100&id=EqlaXlCmEM5J&format=png&color=000000" alt="Ёжик">
+                            Ёжик в тумане</a>
+                    </div>
+                    <div class="story-card bathtub placeholder" data-story-id="bathtub">
+                        <a href="bathtub.html">
+                            <img src="https://img.icons8.com/?size=100&id=aC4YccplF4TM&format=png&color=000000" alt="Ванна">
+                            Ваня и его ванна</a>
+                    </div>
+                    <div class="story-card abyss placeholder" data-story-id="abyss">
+                        <a href="allin.html">
+                            <img src="https://img.icons8.com/?size=100&id=62174&format=png&color=000000" alt="Ва-банк">
+                            Стэнд: Ва-банк на Абисс</a>
+                    </div>
+                    <div class="story-card icehole placeholder" data-story-id="icehole">
+                        <a href="icehole.html">
+                            <img src="https://img.icons8.com/?size=100&id=X2T8QGWmAXid&format=png&color=000000" alt="Прорубь">
+                            История о Ване и проруби</a>
+                    </div>
+                    <div class="story-card sarcophagus placeholder" data-story-id="sarcophagus">
+                        <a href="beer.html">
+                            <img src="https://img.icons8.com/?size=100&id=13300&format=png&color=000000" alt="Саркофаг">
+                            Ваня и легендарный чешский саркофаг</a>
+                    </div>
+                    <div class="story-card roulette placeholder" data-story-id="roulette">
+                        <a href="amber.html">
+                            <img src="https://img.icons8.com/?size=100&id=30226&format=png&color=000000" alt="Рулетка">
+                            Ваня и смена на рулетке</a>
+                    </div>
+                    <div class="story-card strongman placeholder" data-story-id="strongman">
+                        <a href="power.html">
+                            <img src="https://img.icons8.com/?size=100&id=MyDyhaNB2oZy&format=png&color=000000" alt="Гантель">
+                            Сила и Стойкость
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ========================================= -->
+        <!-- ИГРА "КОЛЕСО СУДЬБЫ" -->
+        <!-- ========================================= -->
+        <div id="game-page-view" class="hidden">
+            <div class="container">
+                <h1>Колесо Судьбы</h1>
+                <p class="game-description">Испытайте удачу и силу духа Вани! Крутите колесо, чтобы увидеть, какое приключение ждёт его дальше. Управляйте его Духом и Удачей, чтобы Ваня достиг Просветления!</p>
+                <div class="game-status">
+                    <span>Дух: <span id="vanyaSpirit">100</span></span>
+                    <span>Удача: <span id="vanyaLuck">50</span></span>
+                    <span><img src="https://img.icons8.com/color/24/000000/two-hearts.png" alt="Токен Дружбы" title="Токен Дружбы"> <span id="friendshipTokens">0</span></span>
+                    <span><img src="https://img.icons8.com/color/24/000000/flash-on.png" alt="Токен Силы Духа" title="Токен Силы Духа"> <span id="spiritPowerTokens">0</span></span>
+                    <span><img src="https://img.icons8.com/color/24/000000/beer.png" alt="Легендарное Пиво" title="Легендарное Пиво"> <span id="beerTokens">0</span></span>
+                </div>
+                <div class="wheel-outer-container">
+                    <div class="wheel-pointer"></div>
+                    <div id="vanyaWheel" class="wheel-container">
+                        <!-- Иконки будут динамически добавлены JS -->
+                    </div>
+                </div>
+                <div class="game-result" id="gameResult">
+                    Нажмите "Крутить!", чтобы начать.
+                </div>
+                <!-- Контейнер для кнопок выбора -->
+                <div id="choiceContainer" class="choice-container hidden">
+                    <p id="choiceQuestion"></p>
+                    <div class="choice-buttons">
+                        <button id="choiceA" class="game-choice-button"></button>
+                        <button id="choiceB" class="game-choice-button"></button>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="spinButton">Крутить!</button>
+                    <button id="useFriendship">Дружба</button>
+                    <button id="useSpiritPower">Сила Духа</button>
+                    <button id="useBeer">Пиво</button>
+                </div>
+                <div style="margin-top:16px;margin-bottom:16px;">
+                    <b>Резервное копирование прогресса:</b><br>
+                    <button id="exportStateBtn" type="button">Выгрузить прогресс</button>
+                    <button id="importStateBtn" type="button">Загрузить прогресс</button>
+                    <br>
+                    <textarea id="backupTextarea" style="margin-top:6px;width:90%;max-width:500px;height:48px;font-size:1em;" placeholder="Вставьте сюда код прогресса или нажмите 'Выгрузить'..."></textarea>
+                </div>
+                <div id="notificationDisplay" class="notification-display hidden"></div> <!-- Custom Notification Display -->
+                <div class="achievements-section">
+                    <h2>Достижения</h2>
+                    <div class="achievements-grid" id="achievementsDisplay">
+                        <!-- Достижения будут динамически добавлены здесь -->
+                    </div>
+                </div>
+                <div class="back-to-main">
+                    <a href="#" onclick="showMainPage(); return false;">Вернуться на Главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // ========================================= */
+        // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И НАСТРОЙКИ */
+        // ========================================= */
+        // Состояние игры
+        let vanyaSpirit = 100;
+        let vanyaLuck = 50;
+        let friendshipTokens = 0;
+        let spiritPowerTokens = 0;
+        let beerTokens = 0;
+        let currentSpiritPowerEffect = false;
+        let isSpinning = false;
+        let waitingForChoice = false;
+        let isGameEnded = false;
+        let notificationTimeout; // Для управления кастомными уведомлениями
+
+        // Функции для загрузки состояния и достижений из localStorage с защитой
+        function loadAchievements() {
+            try {
+                const raw = localStorage.getItem('vanyaAchievements');
+                if (!raw) throw new Error('No achievements data in localStorage');
+                const loadedAchievements = JSON.parse(raw);
+                // Проверка основных полей для предотвращения краша
+                if (!loadedAchievements || typeof loadedAchievements.wins !== 'number' ||
+                    !Array.isArray(loadedAchievements.unlockedStories) ||
+                    typeof loadedAchievements.rouletteLandings !== 'number' ||
+                    typeof loadedAchievements.beerUsedCount !== 'number' ||
+                    typeof loadedAchievements.losses !== 'number' ||
+                    typeof loadedAchievements.bathtubFullTrainings !== 'number' ||
+                    typeof loadedAchievements.abyssBigLuckWins !== 'number'
+                ) {
+                    throw new Error('Malformed achievements data');
+                }
+                return loadedAchievements;
+            } catch(e) {
+                console.warn("Failed to load achievements from localStorage, initializing default.", e);
+                // Возврат дефолтного состояния
+                return {
+                    wins: 0,
+                    rouletteLandings: 0,
+                    beerUsedCount: 0,
+                    losses: 0,
+                    bathtubFullTrainings: 0,
+                    abyssBigLuckWins: 0,
+                    unlockedStories: []
+                };
+            }
+        }
+        let achievements = loadAchievements(); // Инициализация достижений при старте
+
+        const maxSpirit = 200;
+        const minSpirit = 0;
+        const maxLuck = 100;
+        const minLuck = 0;
+        // Определения историй для колеса и их ID для разблокировки
+        const storyData = [
+            { id: "hedgehog", name: "Ёжик в тумане", icon: "https://img.icons8.com/?size=100&id=EqlaXlCmEM5J&format=png&color=000000" },
+            { id: "bathtub", name: "Ваня и его ванна", icon: "https://img.icons8.com/?size=100&id=aC4YccplF4TM&format=png&color=000000" },
+            { id: "abyss", name: "Стэнд: Ва-банк на Абисс", icon: "https://img.icons8.com/?size=100&id=62174&format=png&color=000000" },
+            { id: "icehole", name: "История о Ване и проруби", icon: "https://img.icons8.com/?size=100&id=X2T8QGWmAXid&format=png&color=000000" },
+            { id: "sarcophagus", name: "Ваня и легендарный чешский саркофаг", icon: "https://img.icons8.com/?size=100&id=13300&format=png&color=000000" },
+            { id: "roulette", name: "Ваня и смена на рулетке", icon: "https://img.icons8.com/?size=100&id=30226&format=png&color=000000" },
+            { id: "strongman", name: "Сила и Стойкость", icon: "https://img.icons8.com/?size=100&id=MyDyhaNB2oZy&format=png&color=000000" }
+        ];
+        // Определения эффектов для историй на колесе
+        const stories = [
+            // Ёжик в тумане (storyData[0])
+            { name: "Ёжик в тумане", text: "Ваня заблудился в тумане...", effect: () => {
+                let spiritLoss = Math.floor(Math.random() * 10) + 10;
+                let luckInfluence = Math.floor(vanyaLuck / 5);
+                let finalSpiritLoss = Math.max(5, spiritLoss - luckInfluence);
+                vanyaSpirit = Math.max(minSpirit, vanyaSpirit - finalSpiritLoss);
+                gameResultDiv.textContent = `${storyData[0].name}: Дух -${finalSpiritLoss}.`;
+                if (Math.random() > 0.6 && vanyaLuck > 30) {
+                    friendshipTokens++;
+                    gameResultDiv.textContent += " Но его быстро нашли друзья, +1 Дружба!";
+                }
+                saveAchievements();
+                saveGameState();
+            }},
+            // Ваня и его ванна (storyData[1])
+            { name: "Ваня и его ванна", text: "Упорная тренировка в ванне!", effect: () => {
+                waitingForChoice = true;
+                gameResultDiv.textContent = `Ваня готовится к тренировке. Как он поступит?`;
+                choiceQuestion.textContent = "Ваня хочет тренироваться. Насколько сильно он выложится?";
+                choiceAButton.textContent = "По полной (-15 Духа, +25 Удачи)";
+                choiceBButton.textContent = "Осторожно (-5 Духа, +10 Удачи)";
+                choiceAButton.onclick = () => handleChoice('bathtub_full', storyData[1]);
+                choiceBButton.onclick = () => handleChoice('bathtub_cautious', storyData[1]);
+                choiceContainer.classList.remove('hidden');
+                disableGameControls(); // Отключаем основные кнопки
+                enableChoiceButtons(); // Включаем кнопки выбора
+            }},
+            // Стэнд: Ва-банк на Абисс (storyData[2])
+            { name: "Стэнд: Ва-банк на Абисс", text: "Высокие ставки на Абисс!", effect: () => {
+                waitingForChoice = true;
+                gameResultDiv.textContent = `Ваня сталкивается с Игроком. Какую ставку он сделает?`;
+                choiceQuestion.textContent = "На кону время жизни. Ваша ставка?";
+                choiceAButton.textContent = "Ва-банк! (Высокий риск/награда для Удачи)";
+                choiceBButton.textContent = "Осторожно (Средний риск/награда для Удачи)";
+                choiceAButton.onclick = () => handleChoice('abyss_big', storyData[2]);
+                choiceBButton.onclick = () => handleChoice('abyss_small', storyData[2]);
+                choiceContainer.classList.remove('hidden');
+                disableGameControls(); // Отключаем основные кнопки
+                enableChoiceButtons(); // Включаем кнопки выбора
+            }},
+            // История о Ване и проруби (storyData[3])
+            { name: "История о Ване и проруби", text: "Испытание холодом в проруби!", effect: () => {
+                let spiritLoss = Math.floor(Math.random() * 15) + 5;
+                let luckInfluence = Math.floor(vanyaLuck / 7);
+                let finalSpiritLoss = Math.max(2, spiritLoss - luckInfluence);
+                vanyaSpirit = Math.max(minSpirit, vanyaSpirit - finalSpiritLoss);
+                vanyaLuck = Math.min(maxLuck, vanyaLuck + 10);
+                spiritPowerTokens++;
+                gameResultDiv.textContent = `${storyData[3].name}: Дух -${finalSpiritLoss}, Удача +10. Получен +1 Сила Духа!`;
+                saveAchievements();
+                saveGameState();
+            }},
+            // Ваня и легендарный чешский саркофаг (storyData[4])
+            { name: "Ваня и легендарный чешский саркофаг", text: "Древние тайны и... пиво!", effect: () => {
+                waitingForChoice = true;
+                gameResultDiv.textContent = `Ваня нашёл загадочные руны. Что он сделает?`;
+                choiceQuestion.textContent = "Вы попытаетесь расшифровать руны или ищете другой путь?";
+                choiceAButton.textContent = "Расшифровать (Шанс на Пиво)";
+                choiceBButton.textContent = "Искать обход (Небольшой + к Духу)";
+                choiceAButton.onclick = () => handleChoice('sarcophagus_decipher', storyData[4]);
+                choiceBButton.onclick = () => handleChoice('sarcophagus_bypass', storyData[4]);
+                choiceContainer.classList.remove('hidden');
+                disableGameControls(); // Отключаем основные кнопки
+                enableChoiceButtons(); // Включаем кнопки выбора
+            }},
+            // Ваня и смена на рулетке (storyData[5])
+            { name: "Ваня и смена на рулетке", text: "Бесконечная смена за рулеткой...", effect: () => {
+                let spiritGain = Math.floor(Math.random() * 10) + 5;
+                let luckLoss = Math.floor(Math.random() * 5) + 2;
+                let luckInfluence = Math.floor(vanyaLuck / 10);
+                let finalLuckLoss = Math.max(0, luckLoss - luckInfluence);
+                vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + spiritGain);
+                vanyaLuck = Math.max(minLuck, vanyaLuck - finalLuckLoss);
+                gameResultDiv.textContent = `${storyData[5].name}: Дух +${spiritGain}, Удача -${finalLuckLoss}.`;
+                achievements.rouletteLandings++;
+                saveAchievements();
+                saveGameState();
+            }},
+            // Сила и Стойкость (storyData[6])
+            { name: "Сила и Стойкость", text: "Ваня чувствует прилив сил и стойкости!", effect: () => {
+                waitingForChoice = true;
+                gameResultDiv.textContent = `Ваня вспоминает свои корни. Что он выберет?`;
+                choiceQuestion.textContent = "Ваня чувствует прилив сил. Куда он направит свою энергию?";
+                choiceAButton.textContent = "Интенсивная тренировка (Риск/Награда для Духа)";
+                choiceBButton.textContent = "Встреча со старыми друзьями (Надежный Дух и Дружба)";
+                choiceAButton.onclick = () => handleChoice('strongman_workout', storyData[6]);
+                choiceBButton.onclick = () => handleChoice('strongman_friends', storyData[6]);
+                choiceContainer.classList.remove('hidden');
+                disableGameControls(); // Отключаем основные кнопки
+                enableChoiceButtons(); // Включаем кнопки выбора
+            }},
+        ];
+        // ========================================= */
+        // ОПРЕДЕЛЕНИЯ ДОСТИЖЕНИЙ (для отображения в игре) */
+        // ========================================= */
+        const ALL_ACHIEVEMENTS = [
+            {
+                id: 'unlocked_hedgehog',
+                text: 'Открыта история "Ёжик в тумане"',
+                criteria: (a) => a.unlockedStories.includes('hedgehog'),
+                icon: storyData.find(s => s.id === 'hedgehog').icon
+            },
+            {
+                id: 'unlocked_roulette',
+                text: 'Открыта история "Рулетка"',
+                criteria: (a) => a.unlockedStories.includes('roulette'),
+                icon: storyData.find(s => s.id === 'roulette').icon
+            },
+            {
+                id: 'unlocked_sarcophagus',
+                text: 'Открыта история "Саркофаг"',
+                criteria: (a) => a.unlockedStories.includes('sarcophagus'),
+                icon: storyData.find(s => s.id === 'sarcophagus').icon
+            },
+            {
+                id: 'unlocked_icehole',
+                text: 'Открыта история "Прорубь"',
+                criteria: (a) => a.unlockedStories.includes('icehole'),
+                icon: storyData.find(s => s.id === 'icehole').icon
+            },
+            {
+                id: 'unlocked_strongman',
+                text: 'Открыта история "Сила и Стойкость"',
+                criteria: (a) => a.unlockedStories.includes('strongman'),
+                icon: storyData.find(s => s.id === 'strongman').icon
+            },
+            {
+                id: 'unlocked_bathtub',
+                text: 'Открыта история "Ванна"',
+                criteria: (a) => a.unlockedStories.includes('bathtub'),
+                icon: storyData.find(s => s.id === 'bathtub').icon
+            },
+            {
+                id: 'unlocked_abyss',
+                text: 'Открыта история "Ва-банк на Абисс"',
+                criteria: (a) => (a.wins >= 10 || a.abyssBigLuckWins >= 3), // Объединено условие
+                icon: storyData.find(s => s.id === 'abyss').icon
+            },
+            // Достижения, основанные на счетчиках
+            {
+                id: 'first_win_game',
+                text: 'Первая победа в Колесе Судьбы',
+                criteria: (a) => a.wins >= 1,
+                icon: 'https://img.icons8.com/?size=100&id=20894&format=png&color=000000' // Trophy icon
+            },
+            {
+                id: 'five_wins_game',
+                text: 'Пять побед в Колесе Судьбы',
+                criteria: (a) => a.wins >= 5,
+                icon: 'https://img.icons8.com/?size=100&id=1334&format=png&color=000000' // Star icon
+            },
+            {
+                id: 'ten_wins_game',
+                text: 'Десять побед в Колесе Судьбы',
+                criteria: (a) => a.wins >= 10,
+                icon: 'https://img.icons8.com/?size=100&id=9570&format=png&color=000000' // Crown icon
+            },
+            {
+                id: 'first_loss_game',
+                text: 'Первое поражение',
+                criteria: (a) => a.losses >= 1,
+                icon: 'https://img.icons8.com/?size=100&id=63653&format=png&color=000000' // Skull icon
+            },
+            {
+                id: 'ten_roulette_landings',
+                text: '10 раз на "Рулетке"',
+                criteria: (a) => a.rouletteLandings >= 10,
+                icon: storyData.find(s => s.id === 'roulette').icon
+            },
+            {
+                id: 'one_beer_used',
+                text: 'Выпито легендарное пиво',
+                criteria: (a) => a.beerUsedCount >= 1,
+                icon: 'https://img.icons8.com/?size=100&id=B7pWqE04nNlS&format=png&color=000000' // Beer icon
+            },
+            {
+                id: 'three_bathtub_full',
+                text: '3 интенсивные тренировки в ванне',
+                criteria: (a) => a.bathtubFullTrainings >= 3,
+                icon: storyData.find(s => s.id === 'bathtub').icon
+            },
+            {
+                id: 'three_abyss_luck',
+                text: '3 раза успех в Ва-банк на Абисс',
+                criteria: (a) => a.abyssBigLuckWins >= 3,
+                icon: storyData.find(s => s.id === 'abyss').icon
+            }
+        ];
+        // ========================================= */
+        // DOM-ЭЛЕМЕНТЫ */
+        // ========================================= */
+        const appContainer = document.getElementById('app-container');
+        const mainPageView = document.getElementById('main-page-view');
+        const gamePageView = document.getElementById('game-page-view');
+        const vanyaSpiritSpan = document.getElementById('vanyaSpirit');
+        const vanyaLuckSpan = document.getElementById('vanyaLuck');
+        const friendshipTokensSpan = document.getElementById('friendshipTokens');
+        const spiritPowerTokensSpan = document.getElementById('spiritPowerTokens');
+        const beerTokensSpan = document.getElementById('beerTokens');
+        const gameResultDiv = document.getElementById('gameResult');
+        const spinButton = document.getElementById('spinButton');
+        const useFriendshipButton = document.getElementById('useFriendship');
+        const useSpiritPowerButton = document.getElementById('useSpiritPower');
+        const useBeerButton = document.getElementById('useBeer');
+        const vanyaWheel = document.getElementById('vanyaWheel');
+        const choiceContainer = document.getElementById('choiceContainer');
+        const choiceQuestion = document.getElementById('choiceQuestion');
+        const choiceAButton = document.getElementById('choiceA');
+        const choiceBButton = document.getElementById('choiceB');
+        const achievementsDisplay = document.getElementById('achievementsDisplay'); // Новый DOM-элемент
+        const notificationDisplay = document.getElementById('notificationDisplay'); // Custom Notification DOM-элемент
+        const exportBtn = document.getElementById('exportStateBtn');
+        const importBtn = document.getElementById('importStateBtn');
+        const backupTextarea = document.getElementById('backupTextarea');
+
+        // ========================================= */
+        // ФУНКЦИИ УПРАВЛЕНИЯ ВИДАМИ (Главная / Игра) */
+        // ========================================= */
+        function showMainPage() {
+            gamePageView.classList.add('hidden');
+            mainPageView.classList.remove('hidden');
+            appContainer.classList.remove('game-view');
+            appContainer.classList.add('main-view');
+            updateStoryCardsUI(); // Обновляем состояние карточек на главной странице
+            enableGameControls(); // Включаем кнопки (если были отключены)
+        }
+        function showGamePage() {
+            mainPageView.classList.add('hidden');
+            gamePageView.classList.remove('hidden');
+            appContainer.classList.remove('main-view');
+            appContainer.classList.add('game-view');
+            loadGameState(); // Загружаем состояние игры при показе
+            positionWheelIcons(); // Позиционируем иконки, когда игра становится видимой
+            updateStatus(); // Обновляем состояние игры
+            updateAchievementsDisplay(); // Обновляем отображение достижений
+        }
+        // ========================================= */
+        // ФУНКЦИИ УВЕДОМЛЕНИЙ */
+        // ========================================= */
+        function showNotification(message, type = 'success', duration = 3000) {
+            if (!notificationDisplay) return;
+            notificationDisplay.textContent = message;
+            notificationDisplay.className = 'notification-display show'; // Reset classes and show
+            notificationDisplay.classList.add(type === 'warning' ? 'warning' : 'success');
+            clearTimeout(notificationTimeout);
+            notificationTimeout = setTimeout(() => {
+                notificationDisplay.classList.remove('show');
+            }, duration);
+        }
+        // ========================================= */
+        // ФУНКЦИИ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (Отображение карточек) */
+        // ========================================= */
+        function updateStoryCardsUI() {
+            const storyCards = document.querySelectorAll('#main-page-view .story-grid .story-card');
+            storyCards.forEach(card => {
+                const storyId = card.dataset.storyId;
+                const link = card.querySelector('a');
+                // Если это карточка "Колесо Судьбы", она всегда активна
+                if (!storyId) {
+                    card.classList.remove('placeholder');
+                    link.style.pointerEvents = 'auto';
+                    link.title = '';
+                    return;
+                }
+                if (achievements.unlockedStories.includes(storyId)) {
+                    card.classList.remove('placeholder');
+                    link.style.pointerEvents = 'auto';
+                    link.title = '';
+                } else {
+                    card.classList.add('placeholder');
+                    link.style.pointerEvents = 'none';
+                    link.title = 'История заблокирована. Пройдите испытания в "Колесе Судьбы", чтобы открыть ее!';
+                }
+            });
+        }
+        // ========================================= */
+        // ФУНКЦИИ ИГРЫ "КОЛЕСО СУДЬБЫ" */
+        // ========================================= */
+        function saveAchievements() {
+            // Условия разблокировки историй (с уведомлением)
+            const oldUnlockedStories = new Set(achievements.unlockedStories);
+            
+            // Внимание: условие для abyss изменено в ALL_ACHIEVEMENTS. criteria(a) теперь должно быть правильным
+            // Здесь мы просто разблокируем, если критерий выполнен.
+            // Эти `if` можно сократить, если в `ALL_ACHIEVEMENTS` достаточно гибкие критерии.
+            if (achievements.wins >= 1 && !achievements.unlockedStories.includes('hedgehog')) achievements.unlockedStories.push('hedgehog');
+            if (achievements.rouletteLandings >= 10 && !achievements.unlockedStories.includes('roulette')) achievements.unlockedStories.push('roulette');
+            if (achievements.beerUsedCount >= 1 && !achievements.unlockedStories.includes('sarcophagus')) achievements.unlockedStories.push('sarcophagus');
+            if (achievements.wins >= 5 && !achievements.unlockedStories.includes('icehole')) achievements.unlockedStories.push('icehole');
+            if (achievements.losses >= 1 && !achievements.unlockedStories.includes('strongman')) achievements.unlockedStories.push('strongman');
+            if (achievements.bathtubFullTrainings >= 3 && !achievements.unlockedStories.includes('bathtub')) achievements.unlockedStories.push('bathtub');
+            // Для Abyss используем более сложный критерий, аналогичный ALL_ACHIEVEMENTS
+            if ((achievements.wins >= 10 || achievements.abyssBigLuckWins >= 3) && !achievements.unlockedStories.includes('abyss')) achievements.unlockedStories.push('abyss');
+            
+            // Проверяем, какие новые истории были разблокированы и выводим уведомление
+            achievements.unlockedStories.forEach(storyId => {
+                if (!oldUnlockedStories.has(storyId)) {
+                    const storyName = storyData.find(s => s.id === storyId)?.name || 'Неизвестная история';
+                    showNotification(`Поздравляем! Открыта новая история: '${storyName}'!`);
+                }
+            });
+            localStorage.setItem('vanyaAchievements', JSON.stringify(achievements));
+            updateAchievementsDisplay(); // Обновляем отображение достижений
+        }
+        // Новая функция для отображения достижений
+        function updateAchievementsDisplay() {
+            if (!achievementsDisplay) return;
+            achievementsDisplay.innerHTML = '';
+            ALL_ACHIEVEMENTS.forEach(achievement => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('achievement-item');
+                const isAchieved = achievement.criteria(achievements);
+                if (isAchieved) {
+                    itemDiv.classList.add('achieved');
+                }
+                const img = document.createElement('img');
+                img.src = achievement.icon;
+                img.alt = achievement.text;
+                itemDiv.appendChild(img);
+                const span = document.createElement('span');
+                span.textContent = achievement.text;
+                itemDiv.appendChild(span);
+                achievementsDisplay.appendChild(itemDiv);
+            });
+        }
+        function updateStatus() {
+            vanyaSpiritSpan.textContent = Math.round(vanyaSpirit); // Округляем для отображения
+            vanyaLuckSpan.textContent = Math.round(vanyaLuck);     // Округляем для отображения
+            friendshipTokensSpan.textContent = friendshipTokens;
+            spiritPowerTokensSpan.textContent = spiritPowerTokens;
+            beerTokensSpan.textContent = beerTokens;
+            spinButton.disabled = isSpinning || waitingForChoice;
+            useFriendshipButton.disabled = friendshipTokens === 0 || isSpinning || waitingForChoice;
+            useSpiritPowerButton.disabled = spiritPowerTokens === 0 || isSpinning || waitingForChoice || currentSpiritPowerEffect;
+            useBeerButton.disabled = beerTokens === 0 || isSpinning || waitingForChoice;
+            if (vanyaSpirit <= minSpirit) {
+                if (!isGameEnded) {
+                    achievements.losses++;
+                    saveAchievements();
+                    isGameEnded = true;
+                }
+                gameResultDiv.innerHTML = "<h3>Ваня потерял весь Дух. Игра окончена!</h3> <button onclick='resetGame()' class='game-button'>Начать заново</button>";
+                gameResultDiv.classList.add('bad-outcome');
+                disableAllGameControls();
+            } else if (vanyaSpirit >= maxSpirit && vanyaLuck >= maxLuck) {
+                if (!isGameEnded) {
+                    achievements.wins++;
+                    saveAchievements();
+                    isGameEnded = true;
+                }
+                gameResultDiv.innerHTML = "<h3>Ваня достиг просветления и удачи! Вы выиграли!</h3> <button onclick='resetGame()' class='game-button'>Начать заново</button>";
+                gameResultDiv.classList.add('good-outcome');
+                disableAllGameControls();
+            } else {
+                gameResultDiv.classList.remove('bad-outcome', 'good-outcome');
+                isGameEnded = false;
+            }
+            updateAchievementsDisplay(); // Обновляем достижения при каждом обновлении статуса
+        }
+        // Новая функция для включения кнопок выбора
+        function enableChoiceButtons() {
+            choiceAButton.disabled = false;
+            choiceBButton.disabled = false;
+        }
+        function disableGameControls() {
+            spinButton.disabled = true;
+            useFriendshipButton.disabled = true;
+            useSpiritPowerButton.disabled = true;
+            useBeerButton.disabled = true;
+            choiceAButton.disabled = true; // Отключаем кнопки выбора, когда не ждем выбора
+            choiceBButton.disabled = true;
+        }
+        function enableGameControls() {
+            spinButton.disabled = false;
+            useFriendshipButton.disabled = friendshipTokens === 0;
+            useSpiritPowerButton.disabled = spiritPowerTokens === 0 || currentSpiritPowerEffect;
+            useBeerButton.disabled = beerTokens === 0;
+            choiceAButton.disabled = true; // Сбрасываем состояние кнопок выбора, если не ждем выбора
+            choiceBButton.disabled = true;
+        }
+        function disableAllGameControls() {
+            spinButton.disabled = true;
+            useFriendshipButton.disabled = true;
+            useSpiritPowerButton.disabled = true;
+            useBeerButton.disabled = true;
+            choiceAButton.disabled = true;
+            choiceBButton.disabled = true;
+        }
+        function handleChoice(choice, story) {
+            choiceContainer.classList.add('hidden');
+            waitingForChoice = false;
+            let resultText = "";
+            let isBadOutcome = false;
+            let currentLuckEffect = currentSpiritPowerEffect ? 1.5 : 1;
+            switch (choice) {
+                case 'bathtub_full':
+                    achievements.bathtubFullTrainings++;
+                    vanyaSpirit = Math.max(minSpirit, vanyaSpirit - 15);
+                    vanyaLuck = Math.min(maxLuck, vanyaLuck + Math.round(25 * currentLuckEffect));
+                    resultText = `${story.name}: Ваня выложился по полной! Дух -15, Удача +${Math.round(25 * currentLuckEffect)}.`;
+                    if (vanyaSpirit <= 20) isBadOutcome = true;
+                    saveAchievements();
+                    break;
+                case 'bathtub_cautious':
+                    vanyaSpirit = Math.max(minSpirit, vanyaSpirit - 5);
+                    vanyaLuck = Math.min(maxLuck, vanyaLuck + Math.round(10 * currentLuckEffect));
+                    resultText = `${story.name}: Ваня тренировался осторожно. Дух -5, Удача +${Math.round(10 * currentLuckEffect)}.`;
+                    saveAchievements();
+                    break;
+                case 'abyss_big':
+                    // ИСПРАВЛЕНО: vanyaLuck * currentLuckEffect
+                    if (vanyaLuck * currentLuckEffect > 60 && Math.random() < ((vanyaLuck * currentLuckEffect) / 100)) {
+                        vanyaLuck = Math.min(maxLuck, vanyaLuck + 40);
+                        resultText = `${story.name}: Ва-банк сработал! Удача +40!`;
+                        achievements.abyssBigLuckWins++;
+                    } else {
+                        vanyaLuck = Math.max(minLuck, vanyaLuck - 30);
+                        vanyaSpirit = Math.max(minSpirit, vanyaSpirit - 10);
+                        resultText = `${story.name}: Ва-банк провалился... Удача -30, Дух -10.`;
+                        isBadOutcome = true;
+                    }
+                    saveAchievements();
+                    break;
+                case 'abyss_small':
+                    if (Math.random() > 0.4 / currentLuckEffect) {
+                        vanyaLuck = Math.min(maxLuck, vanyaLuck + 15);
+                        resultText = `${story.name}: Осторожная игра принесла успех! Удача +15.`;
+                    } else {
+                        vanyaLuck = Math.max(minLuck, vanyaLuck - 10);
+                        resultText = `${story.name}: Осторожная игра не принесла результата. Удача -10.`;
+                        isBadOutcome = true;
+                    }
+                    saveAchievements();
+                    break;
+                case 'sarcophagus_decipher':
+                    if (vanyaLuck * currentLuckEffect > 40 && Math.random() > 0.5 / currentLuckEffect) {
+                        beerTokens++;
+                        vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + 10);
+                        resultText = `${story.name}: Руны расшифрованы! +1 Легендарное Пиво, Дух +10!`;
+                    } else {
+                        vanyaSpirit = Math.max(minSpirit, vanyaSpirit - 15);
+                        resultText = `${story.name}: Не удалось расшифровать, Дух -15.`;
+                        isBadOutcome = true;
+                    }
+                    saveAchievements();
+                    break;
+                case 'sarcophagus_bypass':
+                    vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + 5);
+                    resultText = `${story.name}: Ваня нашёл обход, Дух +5. Безопасно, но без сокровищ.`;
+                    saveAchievements();
+                    break;
+                case 'strongman_workout':
+                    let spiritBoost = Math.floor(Math.random() * 20) + 15;
+                    let currentBoost = currentSpiritPowerEffect ? 1.5 : 1;
+                    vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + Math.round(spiritBoost * currentBoost));
+                    if (Math.random() < 0.3 * currentBoost) {
+                        vanyaLuck = Math.min(maxLuck, vanyaLuck + 10);
+                        resultText = `${story.name}: Жесткая тренировка дала плоды! Дух +${Math.round(spiritBoost * currentBoost)}, Удача +10.`;
+                    } else {
+                        resultText = `${story.name}: Жесткая тренировка дала плоды! Дух +${Math.round(spiritBoost * currentBoost)}.`;
+                    }
+                    if (vanyaSpirit >= maxSpirit * 0.9) gameResultDiv.classList.add('good-outcome');
+                    saveAchievements();
+                    break;
+                case 'strongman_friends':
+                    vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + 25);
+                    friendshipTokens++;
+                    resultText = `${storyData[6].name}: Встреча с друзьями укрепила Дух +25, и вы получили +1 Токен Дружбы!`;
+                    if (currentSpiritPowerEffect) {
+                        friendshipTokens++;
+                        resultText += " И бонус от Силы Духа: ещё +1 Токен Дружбы!";
+                    }
+                    gameResultDiv.classList.add('good-outcome');
+                    saveAchievements();
+                    break;
+            }
+            gameResultDiv.textContent = resultText;
+            if (isBadOutcome) gameResultDiv.classList.add('bad-outcome'); else gameResultDiv.classList.add('good-outcome');
+            updateStatus();
+            enableGameControls(); // Включаем все кнопки, как положено
+            currentSpiritPowerEffect = false;
+            saveGameState(); // Сохраняем состояние после выбора
+        }
+        function spinWheel() {
+            if (isSpinning || waitingForChoice) return;
+            isSpinning = true;
+            disableGameControls();
+            gameResultDiv.classList.remove('bad-outcome', 'good-outcome');
+            gameResultDiv.textContent = "Колесо вращается...";
+            choiceContainer.classList.add('hidden');
+            const numberOfSectors = storyData.length;
+            const spinDuration = 4000;
+            const rotations = 360 * 5;
+            const targetSectorIndex = Math.floor(Math.random() * numberOfSectors);
+            const sectorAngle = 360 / numberOfSectors;
+            const targetMidAngle = targetSectorIndex * sectorAngle + sectorAngle / 2;
+            // ИСПРАВЛЕНО: Math.random() * (sectorAngle * 0.8)
+            const randomOffset = Math.random() * (sectorAngle * 0.8) - sectorAngle * 0.4;
+            const finalWheelRotation = rotations - targetMidAngle + randomOffset;
+            vanyaWheel.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.1, 0.9, 0.2, 1)`;
+            vanyaWheel.style.transform = `rotate(${finalWheelRotation}deg)`;
+            wheelLabels.forEach((label, idx) => {
+                const iconImg = label.querySelector('img');
+                const midAngle = idx * sectorAngle + sectorAngle / 2;
+                iconImg.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.1, 0.9, 0.2, 1)`;
+                iconImg.style.transform = `rotate(-${midAngle + finalWheelRotation}deg)`;
+            });
+            setTimeout(() => {
+                vanyaWheel.style.transition = 'none';
+                vanyaWheel.style.transform = `rotate(${finalWheelRotation % 360}deg)`;
+                wheelLabels.forEach((label, idx) => {
+                    const iconImg = label.querySelector('img');
+                    const midAngle = idx * sectorAngle + sectorAngle / 2;
+                    label.style.transition = 'none';
+                    iconImg.style.transition = 'none';
+                    iconImg.style.transform = `rotate(-${(midAngle + (finalWheelRotation % 360)) % 360}deg)`;
+                });
+                stories[targetSectorIndex].effect();
+                isSpinning = false;
+                if (!waitingForChoice) { // Если эффект истории не требует выбора, включаем кнопки
+                    updateStatus();
+                    enableGameControls();
+                } else { // Если эффект истории требует выбора, updateStatus() уже обновит, но enableChoiceButtons() нужно будет вызвать отдельно в эффекте
+                    updateStatus();
+                }
+                saveGameState(); // Сохраняем состояние после спина
+            }, spinDuration);
+        }
+        function useItem(itemType) {
+            if (isSpinning || waitingForChoice) return; // Нельзя использовать предметы во время спина или выбора
+            let resultText = "";
+            gameResultDiv.classList.remove('bad-outcome', 'good-outcome');
+            if (itemType === 'friendship' && friendshipTokens > 0) {
+                friendshipTokens--;
+                vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + 20);
+                resultText = "Друзья поддержали Ваню! Дух +20.";
+                gameResultDiv.classList.add('good-outcome');
+            } else if (itemType === 'spiritPower' && spiritPowerTokens > 0 && !currentSpiritPowerEffect) {
+                spiritPowerTokens--;
+                currentSpiritPowerEffect = true;
+                resultText = "Сила Духа активирована! Следующий исход будет значительно улучшен!";
+                gameResultDiv.classList.add('good-outcome');
+            } else if (itemType === 'beer' && beerTokens > 0) {
+                beerTokens--;
+                vanyaSpirit = Math.min(maxSpirit, vanyaSpirit + 50);
+                vanyaLuck = Math.min(maxLuck, vanyaLuck + 20);
+                resultText = "Легендарное Пиво выпито! Дух +50, Удача +20!";
+                gameResultDiv.classList.add('good-outcome');
+                achievements.beerUsedCount++;
+            } else {
+                return; // Ничего не произошло, если предмет не может быть использован
+            }
+            gameResultDiv.textContent = resultText;
+            updateStatus();
+            saveAchievements();
+            saveGameState(); // Сохраняем состояние после использования предмета
+        }
+        function resetGame() {
+            vanyaSpirit = 100;
+            vanyaLuck = 50;
+            friendshipTokens = 0;
+            spiritPowerTokens = 0;
+            beerTokens = 0;
+            currentSpiritPowerEffect = false;
+            isSpinning = false;
+            waitingForChoice = false;
+            isGameEnded = false;
+            vanyaWheel.style.transform = 'rotate(0deg)';
+            wheelLabels.forEach((label, idx) => {
+                const numberOfSectors = storyData.length;
+                const segmentAngle = 360 / numberOfSectors;
+                const midAngle = idx * segmentAngle + segmentAngle / 2;
+                const iconImg = label.querySelector('img');
+                label.style.transition = 'none';
+                label.style.transform = `translate(-50%, -50%) rotate(${midAngle}deg)`;
+                iconImg.style.transition = 'none';
+                iconImg.style.transform = `rotate(-${midAngle}deg)`;
+            });
+            gameResultDiv.textContent = "Нажмите 'Крутить!', чтобы начать.";
+            choiceContainer.classList.add('hidden');
+            updateStatus();
+            enableGameControls();
+            saveGameState(); // Сохраняем состояние по умолчанию после сброса
+        }
+        function saveGameState() {
+            const gameState = {
+                spirit: vanyaSpirit,
+                luck: vanyaLuck,
+                friendship: friendshipTokens,
+                spiritPower: spiritPowerTokens,
+                beer: beerTokens
+            };
+            localStorage.setItem('vanyaGameState', JSON.stringify(gameState));
+        }
+        function loadGameState() {
+            try {
+                const raw = localStorage.getItem('vanyaGameState');
+                // Если ничего нет — сброс к дефолту
+                if (!raw) throw new Error('No state');
+                const savedState = JSON.parse(raw);
+                // Проверяем наличие всeх нужных полей
+                if (typeof savedState.spirit !== 'number' ||
+                    typeof savedState.luck !== 'number' ||
+                    typeof savedState.friendship !== 'number' ||
+                    typeof savedState.spiritPower !== 'number' ||
+                    typeof savedState.beer !== 'number') {
+                    throw new Error('Malformed game save data');
+                }
+                // Заполняем только если всё ок!
+                vanyaSpirit = savedState.spirit;
+                vanyaLuck = savedState.luck;
+                friendshipTokens = savedState.friendship;
+                spiritPowerTokens = savedState.spiritPower;
+                beerTokens = savedState.beer;
+            } catch (e) {
+                console.warn("Failed to load game state from localStorage, initializing default.", e);
+                // Любая ошибка — сбросить к значениям по умолчанию!
+                vanyaSpirit = 100;
+                vanyaLuck = 50;
+                friendshipTokens = 0;
+                spiritPowerTokens = 0;
+                beerTokens = 0;
+            }
+        }
+        // ========================================= */
+        // ИНИЦИАЛИЗАЦИЯ И ОБРАБОТЧИКИ СОБЫТИЙ */
+        // ========================================= */
+        // Динамическое создание элементов иконок для колеса (создается ОДИН РАЗ)
+        const wheelLabels = [];
+        function createWheelIcons() {
+            storyData.forEach((story, index) => {
+                const iconLabel = document.createElement('div');
+                iconLabel.classList.add('wheel-icon-label');
+                const iconImg = document.createElement('img');
+                iconImg.src = story.icon;
+                iconImg.alt = story.name;
+                iconLabel.appendChild(iconImg);
+                vanyaWheel.appendChild(iconLabel);
+                wheelLabels.push(iconLabel);
+            });
+        }
+        // Позиционирование иконок на колесе (вызывается при необходимости, например, при показе игры)
+        function positionWheelIcons() {
+            // Убедитесь, что колесо видимо и имеет размеры перед позиционированием
+            if (vanyaWheel.offsetWidth === 0 || vanyaWheel.offsetHeight === 0) {
+                // Повторить попытку через небольшой таймаут, если элемент еще не отрисован
+                setTimeout(positionWheelIcons, 100);
+                return;
+            }
+            const numberOfSectors = storyData.length;
+            const segmentAngle = 360 / numberOfSectors;
+            const radius = vanyaWheel.offsetWidth / 2;
+            const iconRadialOffset = radius * 0.7; // Увеличено смещение от центра (с 0.3 на 0.7)
+            wheelLabels.forEach((iconLabel, index) => {
+                const midAngle = index * segmentAngle + segmentAngle / 2;
+                // ИСПРАВЛЕНО: iconRadialOffset * Math.cos(...)
+                const x = radius + iconRadialOffset * Math.cos((midAngle - 90) * Math.PI / 180);
+                const y = radius + iconRadialOffset * Math.sin((midAngle - 90) * Math.PI / 180);
+                iconLabel.style.left = `${x}px`;
+                iconLabel.style.top = `${y}px`;
+                iconLabel.style.transform = `translate(-50%, -50%) rotate(${midAngle}deg)`;
+                iconLabel.querySelector('img').style.transform = `rotate(-${midAngle}deg)`; // Иконка вращается в противоположную сторону
+            });
+        }
+
+        // Обработчики кнопок
+        spinButton.addEventListener('click', spinWheel);
+        useFriendshipButton.addEventListener('click', () => useItem('friendship'));
+        useSpiritPowerButton.addEventListener('click', () => useItem('spiritPower'));
+        useBeerButton.addEventListener('click', () => useItem('beer'));
+        
+        // Экспорт состояния
+        exportBtn.onclick = function() {
+            try {
+                const gameState = localStorage.getItem('vanyaGameState');
+                const achievementsState = localStorage.getItem('vanyaAchievements');
+
+                let backupData = {
+                    game: gameState ? JSON.parse(gameState) : null,
+                    achievements: achievementsState ? JSON.parse(achievementsState) : null
+                };
+                
+                backupTextarea.value = JSON.stringify(backupData);
+                backupTextarea.readOnly = false;
+                backupTextarea.select(); // Выделяем текст, чтобы его было легко скопировать
+                showNotification("Скопируйте этот код себе и сохраните!");
+            } catch (e) {
+                showNotification("Ошибка при экспорте данных. Попробуйте еще раз.", "warning");
+                console.error("Export error:", e);
+            }
+        };
+
+        // Импорт состояния
+        importBtn.onclick = function() {
+            try {
+                const importStr = backupTextarea.value.trim();
+                if (!importStr) {
+                    showNotification("Вставьте код в поле ниже!", "warning");
+                    return;
+                }
+                const parsed = JSON.parse(importStr);
+
+                // Расширенная проверка структуры загружаемых данных
+                if (!parsed || typeof parsed !== 'object' || !parsed.game || !parsed.achievements) {
+                    throw new Error("Неверная корневая структура данных");
+                }
+                
+                // Проверка полей game
+                const requiredGameFields = ['spirit', 'luck', 'friendship', 'spiritPower', 'beer'];
+                requiredGameFields.forEach(k => {
+                    if (typeof parsed.game[k] !== 'number') {
+                        throw new Error(`Отсутствует или неверное поле 'game.${k}'`);
+                    }
+                });
+
+                // Проверка полей achievements
+                if (!Array.isArray(parsed.achievements.unlockedStories) || 
+                    typeof parsed.achievements.wins !== 'number' ||
+                    typeof parsed.achievements.rouletteLandings !== 'number' ||
+                    typeof parsed.achievements.beerUsedCount !== 'number' ||
+                    typeof parsed.achievements.losses !== 'number' ||
+                    typeof parsed.achievements.bathtubFullTrainings !== 'number' ||
+                    typeof parsed.achievements.abyssBigLuckWins !== 'number'
+                ) {
+                     throw new Error('Данные достижений повреждены или неполны');
+                }
+
+                localStorage.setItem('vanyaGameState', JSON.stringify(parsed.game));
+                localStorage.setItem('vanyaAchievements', JSON.stringify(parsed.achievements));
+                showNotification("Прогресс успешно восстановлен! Перезагрузите страницу.");
+                setTimeout(() => location.reload(), 1200); // Перезагружаем страницу, чтобы применить новое состояние
+            } catch (e) {
+                showNotification(`Ошибка! Код поврежден или не подходит: ${e.message || e}`, "warning");
+                console.error("Import error:", e);
+            }
+        };
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded fired."); // Отладочное сообщение
+            createWheelIcons(); // Создаем DOM-элементы иконок (один раз)
+            appContainer.classList.add('main-view'); // Устанавливаем начальный фон
+            showMainPage(); // Показываем главную страницу
+            // Состояние игры (vanyaSpirit, vanyaLuck, токены) будет загружено при первом вызове showGamePage()
+            // Достижения уже загружены в achievements глобально функцией loadAchievements.
+            console.log("Initial setup complete. Check UI visibility."); // Отладочное сообщение
+        });
+    </script>
+</body>
+</html>

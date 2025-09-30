@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваня и его ванна</title>
+    <!-- Подключаем Google Fonts для баланса серьезности и дружелюбия -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета для истории "Ваня и его ванна" */
+            --background-light: #fff8e1; /* Светло-кремовый, как пена пива или теплый свет */
+            --background-medium: #ffeecb; /* Чуть более насыщенный */
+            --text-main: #4a3a2d; /* Темный коричневый, как пиво */
+            --text-muted: #706253; /* Приглушенный коричневый */
+            --heading-color: #8b0000; /* Насыщенный темно-красный, как сила или чешский флаг */
+            --accent-gold: #daa520; /* Золотой, цвет пива */
+            --accent-red: #cc0000; /* Красный акцент */
+            --border-light: #e0d0b0; /* Светлая рамка */
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Чистый и современный шрифт */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, var(--background-light), var(--background-medium)); /* Мягкий градиент, напоминающий оттенки пива/света */
+            color: var(--text-main);
+            line-height: 1.7; /* Улучшенная читаемость */
+            text-align: justify;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px; /* Оптимальная ширина для чтения */
+            width: 90%; /* Адаптивная ширина */
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 15px; /* Мягкие, округлые углы */
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            box-sizing: border-box; /* Учитывает padding в ширине */
+            border: 1px solid var(--border-light); /* Добавим легкую рамку */
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--heading-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em; /* Крупный заголовок */
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--accent-gold); /* Пунктирная линия, как пена или золотой акцент */
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            font-size: 1.15em; /* Немного крупнее для легкого чтения */
+        }
+
+        em {
+            font-weight: 700; /* Более жирный для акцента */
+            font-style: normal; /* Убираем дефолтный курсив */
+            color: var(--accent-red); /* Насыщенный красный акцент для важности */
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 50px 0; /* Больше отступа для изображений */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        /* Стиль для первого изображения: Ваня один, упорная работа */
+        .image-container.vanya-alone {
+            background-color: #f0f0f0; /* Нейтральный, слегка серый фон */
+            border: 1px solid #c0c0c0; /* Светлая рамка */
+        }
+
+        /* Стиль для второго изображения: Друзья поддерживают */
+        .image-container.friends-support {
+            background: linear-gradient(to top right, #fff5e0, #ffeccc); /* Нежные кремово-золотистые тона, тепло дружбы */
+            border: 1px solid #ffcc80; /* Мягкая оранжевая рамка */
+        }
+
+        /* Стиль для третьего изображения: Много друзей, праздничная атмосфера */
+        .image-container.many-friends {
+            background: linear-gradient(to top, var(--accent-gold), var(--background-light)); /* Яркий золотистый, как пиво, праздничный */
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.25); /* Более выраженная золотая тень */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Мягкая тень для изображений */
+            margin-bottom: 15px;
+            display: block; /* Убирает лишние отступы под изображением */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.2em;
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px 25px;
+            border: 2px solid var(--accent-gold); /* Золотая рамка */
+            background-color: var(--background-light);
+            border-radius: 50px; /* Форма таблетки */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .back-link a:hover {
+            background-color: var(--accent-gold); /* Золотой фон при наведении */
+            color: #ffffff;
+            border-color: var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+        }
+
+        /* --- Медиа-запросы для мобильных устройств --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваня и его ванна</h1>
+        <p>Ваня всегда был человеком упрямым. Он не любил простых путей, и, возможно, именно поэтому выбрал для себя странное место для тренировок — Чешскую ванну.</p>
+        <p>Обычная белая ванна, наполненная прохладным Чешским пивом, была его ареной, его залом и его испытанием. Он сам смеялся над этим парадоксом: поднимать сухое железо в мокром пиве. Но для него в этом был какой-то особый смысл, Ваня сам не понимал, почему именно ванна.</p>
+        <div class="image-container vanya-alone">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO7dIY9F_gIfBkmtm8nPa_bdGDJUsi8MQN52bP1m9arLjNjXFv6D1JsLQ_OYm-0OcTJXgRGGF_JvDxiMmzLbwmYBxWi4p9N7fhorqk6G8oHvpXvg0zeKIz3VGCpgSNHHCfonqjbbG4rbacfKbtRsSqLJg=w1024-h942-s-no-gm?authuser=0" alt="Ваня тренируется в ванне с пивом">
+            <figcaption>Ваня на своей необычной тренировке в ванне, полной Чешского пива.</figcaption>
+        </div>
+        <p>Каждый раз, когда он опускался в пиво, хватался за холодный гриф штанги и начинал поднимать вес, ему становилось тяжело не только физически.</p>
+        <p>Сначала мышцы горели, как будто кто-то разводил огонь под кожей.<br>
+        Потом дыхание становилось рваным, и сердце начинало глухо стучать в ушах.<br>
+        И, наконец, самое страшное — темнота подступала к глазам. Будто кто-то закрывал шторы, оставляя лишь тонкую полоску света. Ваня сжимал зубы и всё равно продолжал тянуть.</p>
+        <p>“Надо поднять” — говорил он сам себе.</p>
+        <p>И вот однажды, когда вес оказался особенно большим, когда глаза почти совсем потемнели, он вдруг заметил: он не один.</p>
+        <p>Прямо в пиве, рядом, словно из глубины тумана, появились друзья. Они улыбались, хлопали его по плечу и как будто помогали удерживать гриф.</p>
+        <div class="image-container friends-support">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOSlvq0bPIho6IaEdNDDcwsIuMhBpHxGMwZ1pZFcTpDKkDfPq19uYP-TRRRJM6WFDOQ-mdVDPdxdbk_XHBMBYqesiDo7GGsHdGDBL9ycMSJrQ_Wi0xsSpqIvqlNvRp2SigYKdoUS7e2H6n-LgeQf6kNfw=w1184-h864-s-no-gm?authuser=0" alt="Друзья поддерживают Ваню">
+            <figcaption>Поддержка друзей появляется, когда Ваня чувствует себя особенно тяжело.</figcaption>
+        </div>
+        <p>Ваня вздохнул — и штанга поднялась. Легче. Намного легче.<br>
+        Это удивило его.<br>
+        — Я же был один… Откуда они? — думал он, сидя потом в ванной и глядя на рябь пива.</p>
+        <p>Но вскоре он снова вернулся к тренировке.</p>
+        <p>На этот раз вес был ещё больше. Гриф давил на ладони, руки дрожали, грудь будто сжимал камень. Он снова оказался на грани — и снова тьма заволокла глаза. Но вместе с этой тьмой пришёл свет: вокруг появилось еще больше друзей.</p>
+        <div class="image-container many-friends">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOapIL-EFZ7s5MuV7BNod6w6Jg6YkUu4VsEUdKN8dt1jzEjT6JtDeQIn40rUiqAzKo46Pw4BW7YPwPzDYNAsM7TX1A3g4AEa8q6CEIYgVgfvvFIDd-DI7NzNbtMUOPhajysnc4UdPQ_0lF-uJ77LB8R1w=w1184-h793-s-no-gm?authuser=0" alt="Много друзей в комнате с ваннами">
+            <figcaption>Чем тяжелее становится Ване, тем больше друзей появляется рядом, готовых помочь.</figcaption>
+        </div>
+        <p>Они смеялись, кричали ему «Давай, Ваня!». И стало легче. Настолько легче, что Ваня поднял то, что казалось невозможным.</p>
+        <p>Так было каждый раз.<br>
+        Чем тяжелее вес, тем больше друзей появлялось рядом.<br>
+        Чем сильнее темнело в глазах, тем ярче становился смех друзей, поддержка и тепло их рук.</p>
+        <p>И однажды Ваня понял: Ванна — это не просто ванна. Штанга — не просто железо.</p>
+        <p><em>Это жизнь.</em></p>
+        <p>Вес — это трудности, страхи, тревоги, которые каждый несёт на себе. И если тащить их одному, то глаза быстро затянет тьма. Но стоит только поделиться этим весом, позволить другим встать рядом — и становится легче.</p>
+        <p>С тех пор Ваня больше не боялся. Он знал: как бы тяжело ни было, рядом всегда найдутся те, кто поднимет этот вес с ним.</p>
+        <p>И чем тяжелее будет, тем больше друзей появится вокруг.</p>
+        <div class="back-link">
+            <a href="index.html">Вернуться на Главную</a>
+        </div>
+    </div>
+</body>
+</html>

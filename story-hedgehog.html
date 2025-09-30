@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ёжик в тумане</title>
+    <!-- Подключаем Google Fonts для сказочного и современного вида -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Основные цвета для истории "Ёжик в тумане" */
+            --fog-blue-light: #e0f2f7; /* Очень светлый туманный голубой */
+            --fog-blue-medium: #c2e0e9; /* Средний туманный голубой */
+            --text-dark: #2c3e50; /* Темный серо-синий для основного текста */
+            --text-muted: #5a6a7a; /* Приглушенный текст */
+            --accent-purple: #8a63a8; /* Фиолетовый для акцентов (em) */
+            --warm-yellow: #fffaf0; /* Теплый, уютный желтоватый фон для второй части */
+            --warm-orange: #f5b041; /* Теплый оранжевый для акцентов дружбы */
+            --border-color: #a7d9da; /* Мягкий голубоватый для границ */
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Lora', serif; /* Элегантный шрифт с засечками для основного текста */
+            margin: 0;
+            padding: 0; /* Убираем дефолтный padding, чтобы контролировать через .container */
+            background: linear-gradient(to bottom right, var(--fog-blue-light), var(--fog-blue-medium)); /* Мягкий градиент, имитирующий туман */
+            color: var(--text-dark);
+            line-height: 1.7; /* Улучшенная читаемость */
+            text-align: justify; /* Выравнивание по ширине, как в книгах */
+            min-height: 100vh; /* Занимает всю высоту экрана */
+            display: flex; /* Для центрирования контейнера по вертикали на коротких страницах */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px; /* Оптимальная ширина для чтения */
+            width: 90%; /* Адаптивная ширина */
+            margin: 30px auto; /* Вертикальные отступы и центрирование */
+            background-color: #ffffff;
+            padding: 40px 60px; /* Увеличенные отступы внутри контейнера */
+            border-radius: 15px; /* Мягкие, округлые углы */
+            box-shadow: 0 10px 30px var(--shadow-medium); /* Мягкая, но заметная тень */
+            box-sizing: border-box; /* Учитывает padding в ширине */
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em; /* Крупный заголовок */
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            padding-bottom: 10px;
+            /* Убрана жесткая линия, можно добавить более мягкий декор */
+            /* text-shadow: 1px 1px 2px rgba(0,0,0,0.1); */
+        }
+
+        p {
+            margin-bottom: 1.2em; /* Отступы между абзацами */
+            font-size: 1.15em; /* Немного крупнее для легкого чтения */
+        }
+
+        em {
+            font-weight: 700; /* Более жирный для акцента */
+            font-style: normal; /* Убираем дефолтный курсив */
+            color: var(--accent-purple); /* Заметный, но не кричащий цвет */
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 50px 0; /* Больше отступа для изображений */
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #fcfcfc; /* Очень светлый фон для карточки изображения */
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+        
+        /* Стилизация первого изображения (Ёжик в тумане) */
+        .image-container.fog-image {
+            background-color: var(--fog-blue-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Мягкая тень для изображений */
+            margin-bottom: 15px;
+            display: block; /* Убирает лишние отступы под изображением */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Стилизация второго изображения (друзья) */
+        .image-container.friends-image {
+            background-color: var(--warm-yellow); /* Теплый фон для изображения с друзьями */
+            border: 1px solid var(--warm-orange);
+            box-shadow: 0 6px 25px rgba(245, 176, 65, 0.2); /* Теплая тень */
+        }
+
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif; /* Санс-сериф для читабельности подписи */
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px; /* Больше отступа от контента */
+            font-size: 1.2em;
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark); /* Цвет текста кнопки */
+            text-decoration: none;
+            padding: 12px 25px; /* Увеличенный размер кнопки */
+            border: 2px solid var(--border-color); /* Мягкая рамка */
+            background-color: var(--fog-blue-light);
+            border-radius: 50px; /* Форма таблетки */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .back-link a:hover {
+            background-color: var(--accent-purple); /* Более яркий фиолетовый при наведении */
+            color: #ffffff;
+            border-color: var(--accent-purple);
+            box-shadow: 0 4px 15px rgba(138, 99, 168, 0.3); /* Мягкая тень при наведении */
+        }
+
+        /* --- Медиа-запросы для мобильных устройств --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0; /* Уменьшаем общий отступ body */
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px; /* Еще меньше отступы для узких экранов */
+                width: 95%; /* Шире на совсем маленьких экранах */
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ёжик в тумане</h1>
+        <p>Ёжик всегда был существом любопытным и вдумчивым. Он любил считать звёзды по вечерам, пить чай с малиновым вареньем и слушать стрекот цикад. Его мир был простым, но полным маленьких чудес. Но однажды утром всё изменилось.</p>
+        <p>Туман пришёл нежданно. Он выполз из низины, густой, молочно-белый, и окутал лес так плотно, что Ёжик не видел своей лапки. Сначала ему было просто непривычно, даже немного загадочно. Он шагнул в эту белую вату, предвкушая новое приключение. Но шаги становились всё тяжелее, а привычные тропинки исчезали, поглощённые безмолвием.</p>
+        <div class="image-container fog-image">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMdS-nbYJC8l_EyYP5DPE8x6OquITcnsyNVIwoQw2HYibSd2Q7x30tGMJCfJUEubymtWtKQR_BnQueKfCHlKs98eZlCw27yqqDxOSwb6PCkk_m07RvSwyeEi7LyeWmfROBRgxvqQROVZFkM45mxxxqGhg=w864-h791-s-no-gm?authuser=0" alt="Ёжик, потерявшийся в тумане">
+            <figcaption>Ёжик, заблудившийся в густом тумане, теряет ориентиры и смысл.</figcaption>
+        </div>
+        <p>Ёжик шёл, но куда – он не знал. Он звал Медвежонка, звал Сову, но его голос тонул в вязкой тишине, не находя отклика. Мир, который он так хорошо знал, растворился. Ориентиры исчезли. Высокие сосны превратились в серые тени, ручей перестал журчать, заглушенный влажной пеленой.</p>
+        <p>С каждым шагом в его душу забирался холод, который был страшнее сырости тумана. Зачем считать звёзды, если их не видно? Зачем собирать грибы, если не знаешь, куда идти? Зачем пить чай, если нет Медвежонка, чтобы разделить с ним это тепло? Смысл, которым была наполнена каждая минутка его жизни, начал утекать, как вода сквозь пальцы. Ёжик остановился посреди невидимой поляны. Он был потерян. <em>Потерян не только в тумане, но и в самом себе.</em> Его мир сузился до нескольких колючек на спине и отчаянного, пустого одиночества.</p>
+        <p>Он просидел так долго, кажется, целую вечность. Он не чувствовал ни голода, ни холода, только эту всепоглощающую пустоту.</p>
+        <p>Вдруг сквозь пелену он услышал звук. Неясный, приглушённый, но знакомый. "Ёжик! Ё-жик!" – донеслось откуда-то справа. Это был голос Медвежонка, полный беспокойства. А потом, чуть выше и мудрее: "Ку-у-да же ты запропастился, Ёжик?" – голос Совы.</p>
+        <p>Сердце Ёжика вздрогнуло. Он не отвечал, не мог. Слёзы навернулись на глаза, прокладывая дорожки на мокрых от тумана щеках. Но голоса приближались.</p>
+        <p>"Мы тебя искали! Мы волновались!" – сказал Медвежонок, и вот уже его тёплая, большая лапа легла на колючую спину Ёжика. Он прижался к нему, такой мягкий, такой настоящий.<br>
+        "Мы принесли тебе горячего чаю с малиновым вареньем, как ты любишь," – проговорила Сова, и Ёжик почувствовал знакомый, уютный запах.</p>
+        <p>Он поднял глаза на своих друзей. Их силуэты ещё были немного размыты, но их присутствие было ярким и несомненным.<br>
+        "Я... я заблудился," – прошептал Ёжик. "Я потерял... всё. Я не знал, зачем..."<br>
+        "Мы знаем, Ёжик," – тихо сказал Медвежонок, обнимая его крепче. "Бывает, когда туман застилает глаза и сердце. Но мы всегда найдём тебя. И напомним, ради чего стоит жить."</p>
+        <p>Сова склонила голову. "Мир полон чудес, Ёжик. И звёзды никуда не делись. Они просто ждут, когда туман рассеется. И твои друзья ждут."</p>
+        <p>Ёжик пил тёплый чай, ощущая вкус знакомого варенья. Тепло разливалось по его телу, а потом – и по душе. Голоса друзей, их прикосновения, их беспокойство и любовь – всё это было сильнее тумана. Оно начало выталкивать серость из его сердца.</p>
+        <div class="image-container friends-image">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNMFEsnt5n4VF4yF1MoHgO8yC_Kvew-45vcMmxuJhZYmWIpnyMwLXbh_mH7xKbLHcvA2rPMeqFHVPdM_SCoJRmOdkyWOleK-bjmh8Mkqbe6_jbeE2_vs20Q_6u3PPX_gBOtOsiZYG1cKManBhU3vQiG4A=w1184-h779-s-no-gm?authuser=0" alt="Ёжик находит друзей">
+            <figcaption>Встреча с друзьями помогает Ёжику найти себя, и туман начинает рассеиваться.</figcaption>
+        </div>
+        <p>Постепенно, очень медленно, туман вокруг них стал редеть. Сначала появились неясные очертания деревьев, потом тонкие ветки, покрытые каплями росы. Затем сквозь белую пелену пробился луч солнца, золотистый и тёплый. Он осветил лицо Медвежонка, доброе и заботливое, и мудрые глаза Совы.</p>
+        <p>Ёжик поднял голову. Над ними, высоко в небе, туман уже полностью рассеялся, и показались первые, робкие синие просветы. Мир снова обрёл краски, запахи, звуки. И смысл. <em>Смысл был в тёплой лапе друга, в голосе, который звал его, в чашке горячего чая, которую принесли специально для него. Смысл был в том, чтобы быть любимым и нужным.</em></p>
+        <p>Он посмотрел на своих друзей, и его колючки расправились.<br>
+        "Я нашёл вас," – сказал Ёжик, а его голос снова обрёл свою привычную звонкость. "И я нашёл себя."</p>
+        <p>Вместе они пошли к домику Медвежонка, оставляя позади рассеивающиеся клочья тумана, который теперь казался лишь неприятным сном. Ёжик знал, что туман, возможно, ещё придёт, но теперь он знал и другое: он никогда не будет в нём один.</p>
+        <div class="back-link">
+            <a href="index.html">Вернуться на Главную</a>
+        </div>
+    </div>
+</body>
+</html>

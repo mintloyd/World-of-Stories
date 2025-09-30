@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваня и легендарный чешский саркофаг</title>
+    <!-- Подключаем Google Fonts для баланса древности и читаемости -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета для истории "Ваня и легендарный чешский саркофаг" */
+            --bg-ancient-light: #efebe9; /* Очень светлый, как старый камень */
+            --bg-ancient-dark: #d7ccc8;  /* Более темный камень */
+            --text-dark-earth: #4e342e; /* Темный земляной/коричневый для текста */
+            --text-muted-earth: #795548; /* Приглушенный земляной */
+            --heading-stone: #5d4037;   /* Глубокий коричневый, как старый камень */
+            --accent-gold-beer: #daa520; /* Золотой, как пиво */
+            --accent-amber: #ffbf00;    /* Янтарный */
+            --accent-danger: #d32f2f;   /* Красный для опасности */
+            --bg-night-sky: #2c3e50;    /* Глубокий синий для ночного неба */
+            --bg-night-stars: #4a0e88;  /* Фиолетовый оттенок для звездного неба */
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Чистый и современный шрифт */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, var(--bg-ancient-light), var(--bg-ancient-dark)); /* Градиент, имитирующий оттенки древнего камня */
+            color: var(--text-dark-earth);
+            line-height: 1.7; /* Улучшенная читаемость */
+            text-align: justify;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px; /* Оптимальная ширина для чтения */
+            width: 90%; /* Адаптивная ширина */
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 15px; /* Мягкие, округлые углы */
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            box-sizing: border-box; /* Учитывает padding в ширине */
+            border: 1px solid var(--bg-ancient-dark); /* Легкая каменная рамка */
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif; /* Более выразительный шрифт для заголовка */
+            color: var(--heading-stone);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3.2em; /* Крупный заголовок */
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--heading-stone); /* Пунктирная линия, как старинный узор */
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            font-size: 1.15em; /* Немного крупнее для легкого чтения */
+        }
+
+        em {
+            font-weight: 700; /* Более жирный для акцента */
+            font-style: normal; /* Убираем дефолтный курсив */
+            color: var(--accent-gold-beer); /* Золотистый акцент для "сокровища" и "истины" */
+            text-shadow: 0 0 3px rgba(218, 165, 32, 0.3); /* Легкая тень для золота */
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 50px 0; /* Больше отступа для изображений */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        /* Стиль для первого изображения: Ваня расшифровывает руны (тайна, древность) */
+        .image-container.rune-decipher {
+            background-color: #f7f7f7; /* Нейтральный светлый фон */
+            border: 1px solid var(--bg-ancient-dark);
+        }
+
+        /* Стиль для второго изображения: Ваня находит пиво (открытие, золото) */
+        .image-container.beer-discovery {
+            background: linear-gradient(to top right, var(--accent-gold-beer), #fdd835); /* Яркий золотистый градиент */
+            border: 1px solid var(--accent-amber);
+            box-shadow: 0 8px 25px rgba(255, 191, 0, 0.25); /* Теплая золотая тень */
+        }
+
+        /* Стиль для третьего изображения: Гробница рушится (опасность, паника) */
+        .image-container.tomb-collapse {
+            background: linear-gradient(to bottom, #424242, #212121); /* Темный, давящий фон */
+            border: 1px solid #757575; /* Серый, как обваливающийся камень */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Тяжелая тень */
+        }
+
+        /* Стиль для четвертого изображения: Друзья спасают Ваню (свет в темноте, тепло дружбы) */
+        .image-container.friends-rescue {
+            background: linear-gradient(to top, var(--bg-ancient-dark), var(--bg-ancient-light)); /* Светлеет, но сохраняет земляные тона */
+            border: 1px solid var(--heading-stone);
+            box-shadow: 0 8px 25px rgba(93, 64, 55, 0.2); /* Теплая земляная тень */
+        }
+
+        /* Стиль для пятого изображения: Счастливый конец (звездное небо, праздник) */
+        .image-container.prague-celebration {
+            background: linear-gradient(to bottom right, var(--bg-night-sky), var(--bg-night-stars)); /* Градиент ночного неба */
+            border: 1px solid var(--accent-gold-beer);
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3); /* Тень ночного неба */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-container figcaption {
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            color: var(--text-muted-earth);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.2em;
+        }
+        .back-link a {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--heading-stone);
+            text-decoration: none;
+            padding: 12px 25px;
+            border: 2px solid var(--accent-gold-beer); /* Золотая рамка, как символ сокровища */
+            background-color: var(--bg-ancient-light);
+            border-radius: 50px; /* Форма таблетки */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: inline-block;
+            white-space: nowrap;
+            box-sizing: border-box;
+            max-width: 90%;
+        }
+        .back-link a:hover {
+            background-color: var(--accent-gold-beer);
+            color: #ffffff;
+            border-color: var(--accent-gold-beer);
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+        }
+
+        /* --- Медиа-запросы для мобильных устройств --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            p {
+                font-size: 1.05em;
+            }
+            .image-container {
+                margin: 40px 0;
+                padding: 15px;
+            }
+            .back-link {
+                margin-top: 40px;
+            }
+            .back-link a {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            p {
+                font-size: 1em;
+                text-align: left; /* Убираем justify на очень узких экранах для предотвращения "дыр" */
+            }
+            .image-container {
+                margin: 30px 0;
+                padding: 10px;
+            }
+            .image-container figcaption {
+                font-size: 0.85em;
+            }
+            .back-link {
+                margin-top: 30px;
+            }
+            .back-link a {
+                padding: 8px 15px;
+                font-size: 1em;
+                white-space: normal; /* Разрешаем перенос текста для узких экранов */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваня и легендарный чешский саркофаг</h1>
+        <p>В старом чешском городе, под шумными улочками и древними соборами, жил Ваня. Мы между собой звали его Чешским философом: он любил тишину, искусство, да бесконечные рассуждения о жизни за кружкой пива. Но однажды он решился на поступок куда смелее, чем очередной философский спор.</p>
+        <p>Ходили слухи, что под пражскими гробницами скрыт легендарный саркофаг, в котором покоится не золото и не драгоценные камни, а иное, куда более редкое сокровище — древнее чешское пиво, сваренное по рецепту, утраченному века назад.</p>
+        <p>И вот однажды ночью Ваня, вооружившись фонарём, блокнотом и своей страстью к каллиграфии, спустился в темные катакомбы.</p>
+        <div class="image-container rune-decipher">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPHmTfQTqq12ID-UHmb49oNKWL6Mcj_3F2UspAkqfVJMaV5nkx2-3SAAazs19PsTeavVEL4OuCVhWALYCEaFZfrgQ1x-Y39-2HQtfXxBuSoEm2MMaliQToJAnMgNSljnqKvYFtT3gKLNw6oYb9j-8J58A=w1024-h1536-s-no-gm?authuser=0" alt="Ваня расшифровывает руны">
+            <figcaption>Ваня внимательно изучает древние руны на стене гробницы.</figcaption>
+        </div>
+        <p>Пути вели его всё глубже, пока он не наткнулся на каменную дверь, украшенную странными символами. Для любого другого это выглядело бы как набор бессмысленных черт, но Ваня, мастерски понимающий татуировки и рунические узоры, начал внимательно изучать надписи. Он различил ритм линий, словно это была древняя надпись-стихия. Несколько часов он срисовывал знаки в блокнот, пока не понял: чтобы открыть дверь, нужно сложить пальцы в определенный жест, будто старинный знак братства.</p>
+        <p>Дверь скрипнула и медленно разошлась. Внутри сиял саркофаг, обвитый мозаикой. Когда Ваня открыл его, в нём действительно лежали кувшины с янтарным напитком, пахнущим так, что кружилась голова.</p>
+        <div class="image-container beer-discovery">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOFs4j_EhzBgROPcZMCog-x0TUhFzgySGLOafSHV2pvWJbGKFIlLA_J5m74ccOXBxIVBstzAzWZC8k74-PWEq2ApQLmHKOAyMDgOqfno3lj7BunbD3IAWqvCbtiRkzHqBVoI8za1cVA2K8Liq7FctToPA=w1024-h1536-s-no-gm?authuser=0" alt="Ваня находит легендарное пиво">
+            <figcaption>Ваня обнаруживает легендарное пиво в древнем саркофаге.</figcaption>
+        </div>
+        <p>Но как только он коснулся сокровища, гробница начала рушиться. Камни падали, воздух густел, проход назад заваливало. Ваня понял: ещё немного — и он останется здесь навеки, один, с кувшинами пива, но без друзей, без смеха и разговоров.</p>
+        <div class="image-container tomb-collapse">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPqdo9W2tOSOvpE4_7MWavDkVxdi34vvzwCMXlC5W4Ct7ypLHLbHXezPFDBnE_MRspSVbRc84AOuYRE1miXF0sZCFVqRT3TS0IL7u7p1eg7DaGxRGc5pr8NWpOynwAKfGk1OmQMN4E-nQwZZH53kOPxjw=w1024-h1536-s-no-gm?authuser=0" alt="Гробница рушится">
+            <figcaption>Обвал в гробнице, Ваня в отчаянии.</figcaption>
+        </div>
+        <p>И вдруг — из темноты раздались голоса. Это были его друзья. Они спустились за ним, следуя за слабым светом фонаря и звуком каменного обвала. Вместе, напрягая силы, они отодвинули плиты и вытащили Ваню наружу.</p>
+        <div class="image-container friends-rescue">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMdR07pFU8u9ep-r5ggB8qcW_fucExQ4WYEZftXR74MhSiJtOdYqBwQghmRaZjl4B6ij1SVRECe4O1xtWEafU7TXTo3wa3RDz7oMDPHPq6DKAyDrE6BIen2UdWnDuCXZZ9pyKkLEY7zhHxMv5DIx8R6UA=w1536-h1024-s-no-gm?authuser=0" alt="Друзья спасают Ваню">
+            <figcaption>Друзья приходят на помощь Ване, спасая его из ловушки.</figcaption>
+        </div>
+        <p>На поверхности, под звездным небом Праги, Ваня, запыхавшийся и пыльный, разлил найденное пиво между друзьями.</p>
+        <p>— Вот оно, настоящее сокровище, — сказал он. — Не в саркофагах и легендах. Настоящее сокровище — это вы.</p>
+        <div class="image-container prague-celebration">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNL1XcI5zYe280vT57b-llShVgJmkvTDBQ_Lg_7v9RGjELBycD3Kcz71pw1_SiI15CVfgC_pMHHr9hSbv16P18xrr6kg-GzlH4Fwc5KHcACG5p_AwtiG0xFMLrFHhKqTgCkTvCnz8VnOV_uOv99gc0yEA=w1024-h1536-s-no-gm?authuser=0" alt="Счастливый конец">
+            <figcaption>Счастливое распитие пива вместе с друзьями.</figcaption>
+        </div>
+        <p>И с тех пор мы ещё крепче стали называть его Чешским философом. Потому что понял он одну истину: без друзей даже древнейшее пиво не имеет вкуса.</p>
+        <div class="back-link">
+            <a href="index.html">Вернуться на Главную</a>
+        </div>
+    </div>
+</body>
+</html>
